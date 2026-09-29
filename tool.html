@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 도구 도감</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --accent-general: #0284c7;
+            --accent-mine: #d97706;
+            --accent-farm: #059669;
+            --accent-cook: #e11d48;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.general { border-top: 4px solid var(--accent-general); }
+        .card.mine { border-top: 4px solid var(--accent-mine); }
+        .card.farm { border-top: 4px solid var(--accent-farm); }
+        .card.cook { border-top: 4px solid var(--accent-cook); }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card.general h2 { color: var(--accent-general); }
+        .card.mine h2 { color: var(--accent-mine); }
+        .card.farm h2 { color: var(--accent-farm); }
+        .card.cook h2 { color: var(--accent-cook); }
+
+        .items-list {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .desc {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🛠️ 게임 도구 도감</h1>
+        
+        <div class="grid">
+            <!-- 일반 도구 -->
+            <div class="card general">
+                <h2>⚔️ 일반 도구</h2>
+                <div class="items-list">철검 / 철곡괭이 / 철괭이 / 낚시대</div>
+                <p class="desc">직업 레벨에 따라 인챈트가 자동으로 부여되며, 상점에서 구매할 수 있습니다.</p>
+            </div>
+
+            <!-- 광산 전용 도구 -->
+            <div class="card mine">
+                <h2>⛏️ 광산 전용 도구</h2>
+                <div class="items-list">초보자 / 숙련자 / 장인의 곡괭이</div>
+                <p class="desc">캐는 광물이 아닌 곡괭이로 때려서 채광합니다. 순서대로 1회 타격당 <strong>1</strong>, <strong>5</strong>, <strong>25</strong>의 데미지를 입힙니다.</p>
+            </div>
+
+            <!-- 농사 전용 도구 -->
+            <div class="card farm">
+                <h2>💧 농사 전용 도구</h2>
+                <div class="items-list">초보자 / 숙련자 / 장인의 물뿌리개</div>
+                <p class="desc">각각 <strong>1x1</strong>, <strong>3x3</strong>, <strong>5x5</strong> 범위의 농경지를 3분 동안 촉촉하게 유지할 수 있습니다.</p>
+            </div>
+
+            <!-- 요리 전용 도구 -->
+            <div class="card cook">
+                <h2>🍳 요리 전용 도구</h2>
+                <div class="items-list">냄비 / 착즙기 / 프라이팬 / 식칼 / 손절구 / 조리대</div>
+                <p class="desc">다양한 요리를 제작하는 데 필수적으로 사용되는 도구들입니다.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

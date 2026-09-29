@@ -1,0 +1,374 @@
+	<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상점 통합 목록 - 오리진피아</title>
+    <style>
+        body { font-family: sans-serif; max-width: 1200px; margin: 40px auto; padding: 20px; background-color: #f9f9f9; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        
+        /* 판매가 공식 안내 박스 스타일 */
+        .formula-box {
+            background-color: #e8f4fd;
+            border-left: 5px solid #3498db;
+            padding: 12px 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        /* 대분류(상점) 탭 스타일 */
+        .main-tab-container { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .main-tab-button { background-color: #2980b9; color: white; border: none; padding: 12px 24px; cursor: pointer; font-size: 1.2em; font-weight: bold; border-radius: 4px; margin: 0 5px; transition: background-color 0.3s; }
+        .main-tab-button.active { background-color: #1f618d; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .main-tab-button:hover:not(.active) { background-color: #3498db; }
+
+        /* 소분류(어류/씨앗 등) 탭 스타일 */
+        .sub-tab-container { display: flex; justify-content: center; margin-bottom: 20px; }
+        .sub-tab-button { background-color: #e0e0e0; border: none; padding: 10px 20px; cursor: pointer; font-size: 1.05em; font-weight: bold; transition: background-color 0.3s; }
+        .sub-tab-button:not(:last-child) { border-right: 1px solid #ccc; }
+        .sub-tab-button.active { background-color: #3498db; color: white; }
+        .sub-tab-button:hover:not(.active) { background-color: #d0d0d0; }
+
+        /* 콘텐츠 섹션 스타일 */
+        .main-section { display: none; }
+        .main-section.active { display: block; }
+        
+        .sub-section { display: none; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .sub-section.active { display: block; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 0.95em; }
+        th { background-color: #f2f2f2; color: #333; }
+        
+        .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #3498db; font-size: 1.1em; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h1>상점 목록 - 오리진피아</h1>
+
+    <!-- 상점 대분류 탭 (농산물 / 광물 / 물고기) -->
+    <div class="main-tab-container">
+        <button class="main-tab-button active" onclick="switchMainTab(event, 'agriculture')">농산물</button>
+        <button class="main-tab-button" onclick="switchMainTab(event, 'minerals')">광물</button>
+        <button class="main-tab-button" onclick="switchMainTab(event, 'fish')">물고기</button>
+    </div>
+
+    <!-- ==================== 1. 농산물 섹션 ==================== -->
+    <div id="agriculture" class="main-section active">
+        <!-- 소분류 탭 (씨앗 / 묘목) -->
+		<div class="formula-box">
+			1분간 판매량 : 640개 이상 -> 10분간 가격 30% 하락<br>
+			1분간 판매량 : 128개 이하 -> 10분간 가격 20% 인상
+		</div>
+        <div class="sub-tab-container">
+            <button class="sub-tab-button active" onclick="switchSubTab(event, 'seeds')">씨앗</button>
+            <button class="sub-tab-button" onclick="switchSubTab(event, 'saplings')">묘목</button>
+        </div>
+		
+        <!-- 씨앗 탭 -->
+        <div id="seeds" class="sub-section active">
+            <h2>씨앗 목록</h2>
+            <table>
+                <tr><th>이름</th><th>씨앗 가격</th><th>생산물 가격</th></tr>
+                <tr><td>아티초크</td><td>2,500원</td><td>450원</td></tr>
+                <tr><td>아스파라거스</td><td>3,500원</td><td>600원</td></tr>
+                <tr><td>보리</td><td>1,000원</td><td>150원</td></tr>
+                <tr><td>바질</td><td>1,500원</td><td>240원</td></tr>
+                <tr><td>피망</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>검은콩</td><td>1,500원</td><td>250원</td></tr>
+                <tr><td>블랙베리</td><td>4,500원</td><td>750원</td></tr>
+                <tr><td>블루베리</td><td>4,500원</td><td>750원</td></tr>
+                <tr><td>브로콜리</td><td>2,000원</td><td>360원</td></tr>
+                <tr><td>양배추</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>캔탈루프 멜론</td><td>5,000원</td><td>900원</td></tr>
+                <tr><td>콜리플라워</td><td>2,500원</td><td>450원</td></tr>
+                <tr><td>샐러리</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>칠레고추</td><td>2,500원</td><td>450원</td></tr>
+                <tr><td>커피콩</td><td>7,000원</td><td>1,200원</td></tr>
+                <tr><td>옥수수</td><td>1,500원</td><td>240원</td></tr>
+                <tr><td>크랜베리</td><td>4,500원</td><td>750원</td></tr>
+                <tr><td>오이</td><td>1,600원</td><td>270원</td></tr>
+                <tr><td>까치밥나무 열매</td><td>3,500원</td><td>600원</td></tr>
+                <tr><td>가지</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>딱총나무 열매</td><td>3,500원</td><td>600원</td></tr>
+                <tr><td>마늘</td><td>1,200원</td><td>210원</td></tr>
+                <tr><td>생강</td><td>2,000원</td><td>360원</td></tr>
+                <tr><td>포도</td><td>5,000원</td><td>900원</td></tr>
+                <tr><td>완두콩</td><td>1,500원</td><td>240원</td></tr>
+                <tr><td>파</td><td>1,000원</td><td>180원</td></tr>
+                <tr><td>허니듀 멜론</td><td>5,000원</td><td>900원</td></tr>
+                <tr><td>홉</td><td>6,000원</td><td>1,050원</td></tr>
+                <tr><td>케일</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>키위</td><td>4,500원</td><td>750원</td></tr>
+                <tr><td>리크</td><td>2,000원</td><td>330원</td></tr>
+                <tr><td>상추</td><td>1,000원</td><td>150원</td></tr>
+                <tr><td>머스타드</td><td>1,500원</td><td>240원</td></tr>
+                <tr><td>귀리</td><td>1,000원</td><td>180원</td></tr>
+                <tr><td>올리브</td><td>7,000원</td><td>1,200원</td></tr>
+                <tr><td>양파</td><td>1,200원</td><td>210원</td></tr>
+                <tr><td>땅콩</td><td>1,600원</td><td>270원</td></tr>
+                <tr><td>후추</td><td>6,000원</td><td>1,050원</td></tr>
+                <tr><td>파인애플</td><td>8,000원</td><td>1,350원</td></tr>
+                <tr><td>무</td><td>1,200원</td><td>210원</td></tr>
+                <tr><td>산딸기</td><td>3,800원</td><td>660원</td></tr>
+                <tr><td>루바브</td><td>2,500원</td><td>450원</td></tr>
+                <tr><td>쌀</td><td>1,000원</td><td>180원</td></tr>
+                <tr><td>루타바가</td><td>2,000원</td><td>360원</td></tr>
+                <tr><td>선인장 열매</td><td>6,000원</td><td>1,050원</td></tr>
+                <tr><td>대두</td><td>1,200원</td><td>210원</td></tr>
+                <tr><td>시금치</td><td>1,000원</td><td>180원</td></tr>
+                <tr><td>스쿼시 호박</td><td>2,000원</td><td>330원</td></tr>
+                <tr><td>딸기</td><td>3,500원</td><td>600원</td></tr>
+                <tr><td>고구마</td><td>1,600원</td><td>270원</td></tr>
+                <tr><td>찻잎</td><td>9,000원</td><td>1,500원</td></tr>
+                <tr><td>토마티요</td><td>2,500원</td><td>450원</td></tr>
+                <tr><td>토마토</td><td>1,800원</td><td>300원</td></tr>
+                <tr><td>강황</td><td>5,000원</td><td>900원</td></tr>
+                <tr><td>순무</td><td>1,500원</td><td>240원</td></tr>
+                <tr><td>바닐라</td><td>14,000원</td><td>2,400원</td></tr>
+                <tr><td>마</td><td>2,000원</td><td>360원</td></tr>
+                <tr><td>애호박</td><td>2,000원</td><td>330원</td></tr>
+            </table>
+        </div>
+
+        <!-- 묘목 탭 -->
+        <div id="saplings" class="sub-section">
+            <h2>묘목 목록</h2>
+            <table>
+                <tr><th>이름</th><th>묘목 가격</th><th>생산물 가격</th></tr>
+                <tr><td>아몬드</td><td>20,000원</td><td>3,500원</td></tr>
+                <tr><td>사과</td><td>18,000원</td><td>3,000원</td></tr>
+                <tr><td>살구</td><td>19,000원</td><td>3,300원</td></tr>
+                <tr><td>아보카도</td><td>25,000원</td><td>4,500원</td></tr>
+                <tr><td>바나나</td><td>24,000원</td><td>4,200원</td></tr>
+                <tr><td>캐슈넛</td><td>27,000원</td><td>4,800원</td></tr>
+                <tr><td>체리</td><td>22,000원</td><td>3,900원</td></tr>
+                <tr><td>코코넛</td><td>30,000원</td><td>5,400원</td></tr>
+                <tr><td>대추</td><td>18,000원</td><td>3,000원</td></tr>
+                <tr><td>용과</td><td>35,000원</td><td>6,000원</td></tr>
+                <tr><td>무화과</td><td>22,000원</td><td>3,900원</td></tr>
+                <tr><td>자몽</td><td>20,000원</td><td>3,600원</td></tr>
+                <tr><td>금귤</td><td>19,000원</td><td>3,300원</td></tr>
+                <tr><td>레몬</td><td>20,000원</td><td>3,600원</td></tr>
+                <tr><td>라임</td><td>20,000원</td><td>3,600원</td></tr>
+                <tr><td>망고</td><td>27,000원</td><td>4,800원</td></tr>
+                <tr><td>천도복숭아</td><td>22,000원</td><td>3,900원</td></tr>
+                <tr><td>육두구</td><td>38,000원</td><td>6,600원</td></tr>
+                <tr><td>오렌지</td><td>20,000원</td><td>3,600원</td></tr>
+                <tr><td>복숭아</td><td>22,000원</td><td>3,900원</td></tr>
+                <tr><td>배</td><td>19,000원</td><td>3,300원</td></tr>
+                <tr><td>피칸</td><td>29,000원</td><td>5,100원</td></tr>
+                <tr><td>감</td><td>19,000원</td><td>3,300원</td></tr>
+                <tr><td>자두</td><td>20,000원</td><td>3,600원</td></tr>
+                <tr><td>스타푸르트</td><td>42,000원</td><td>7,500원</td></tr>
+                <tr><td>호두</td><td>25,000원</td><td>4,500원</td></tr>
+                <tr><td>시나몬</td><td>50,000원</td><td>9,000원</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 2. 광물 섹션 ==================== -->
+    <div id="minerals" class="main-section">
+        <div class="sub-section active" style="display: block;">
+            <h2>광물 가격표</h2>
+            <table>
+                <tr><th>이름</th><th>가격</th></tr>
+                <tr><td>석탄</td><td>200원</td></tr>
+                <tr><td>구리</td><td>500원</td></tr>
+                <tr><td>철</td><td>1,000원</td></tr>
+                <tr><td>금</td><td>2,500원</td></tr>
+                <tr><td>레드스톤</td><td>1,500원</td></tr>
+                <tr><td>청금석</td><td>1,200원</td></tr>
+                <tr><td>자수정</td><td>3,000원</td></tr>
+                <tr><td>다이아</td><td>6,000원</td></tr>
+                <tr><td>에메랄드</td><td>5,000원</td></tr>
+                <tr><td>흑요석</td><td>4,000원</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ==================== 3. 물고기 섹션 ==================== -->
+    <div id="fish" class="main-section">
+        <div class="formula-box">
+            판매가 = 가격 × 낚은 크기 / 최소 크기
+        </div>
+        <!-- 소분류 탭 (계절별) -->
+        <div class="sub-tab-container">
+            <button class="sub-tab-button active" onclick="switchSubTab(event, 'spring')">봄</button>
+            <button class="sub-tab-button" onclick="switchSubTab(event, 'summer')">여름</button>
+            <button class="sub-tab-button" onclick="switchSubTab(event, 'autumn')">가을</button>
+            <button class="sub-tab-button" onclick="switchSubTab(event, 'winter')">겨울</button>
+        </div>
+
+        <!-- 봄 -->
+        <div id="spring" class="sub-section active">
+            <h2>봄 어류 목록</h2>
+            <table>
+                <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
+                <tr><td>멸치</td><td>100원</td><td>6.49%</td><td>5 ~ 12cm</td><td>소형</td></tr>
+                <tr><td>망상어</td><td>150원</td><td>6.26%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>학공치</td><td>200원</td><td>6.03%</td><td>12 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>자리돔</td><td>180원</td><td>6.12%</td><td>8 ~ 15cm</td><td>소형</td></tr>
+                <tr><td>실치</td><td>150원</td><td>6.40%</td><td>3 ~ 8cm</td><td>소형</td></tr>
+                <tr><td>볼락</td><td>300원</td><td>5.57%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>노래미</td><td>250원</td><td>5.80%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>쥐치</td><td>350원</td><td>5.33%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>청어</td><td>200원</td><td>6.03%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>독가시치</td><td>300원</td><td>5.47%</td><td>12 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>황어</td><td>220원</td><td>5.94%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>가자미</td><td>400원</td><td>5.19%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>돌돔</td><td>500원</td><td>5.01%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>벵에돔</td><td>450원</td><td>5.10%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>참돔</td><td>500원</td><td>4.87%</td><td>10 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>도다리</td><td>1,200원</td><td>2.32%</td><td>22 ~ 38cm</td><td>중형</td></tr>
+                <tr><td>우럭</td><td>1,400원</td><td>2.09%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>감성돔</td><td>1,600원</td><td>1.86%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>숭어</td><td>1,000원</td><td>2.41%</td><td>20 ~ 35cm</td><td>중형</td></tr>
+                <tr><td>농어</td><td>1,800원</td><td>1.76%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>자바리</td><td>2,000원</td><td>1.48%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>민어</td><td>2,200원</td><td>1.39%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>삼치</td><td>4,000원</td><td>0.56%</td><td>45 ~ 75cm</td><td>대형</td></tr>
+                <tr><td>붕장어</td><td>4,500원</td><td>0.46%</td><td>50 ~ 80cm</td><td>대형</td></tr>
+                <tr><td>대형민어</td><td>10,000원</td><td>0.05%</td><td>85 ~ 115cm</td><td>휠척</td></tr>
+            </table>
+        </div>
+
+        <!-- 여름 -->
+        <div id="summer" class="sub-section">
+            <h2>여름 어류 목록</h2>
+            <table>
+                <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
+                <tr><td>피라미</td><td>120원</td><td>6.26%</td><td>6 ~ 14cm</td><td>소형</td></tr>
+                <tr><td>은어</td><td>250원</td><td>5.59%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>블루길</td><td>150원</td><td>6.17%</td><td>8 ~ 15cm</td><td>소형</td></tr>
+                <tr><td>꺽지</td><td>220원</td><td>5.72%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>날치</td><td>280원</td><td>5.45%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>꽁치</td><td>180원</td><td>5.90%</td><td>15 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>고등어</td><td>200원</td><td>5.81%</td><td>15 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>전갱이</td><td>220원</td><td>5.72%</td><td>12 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>한치</td><td>400원</td><td>5.01%</td><td>12 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>쏘가리</td><td>450원</td><td>4.92%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>붕어</td><td>150원</td><td>6.03%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>배스</td><td>180원</td><td>5.90%</td><td>12 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>누치</td><td>200원</td><td>5.81%</td><td>10 ~ 18cm</td><td>소형</td></tr>
+                <tr><td>강아치</td><td>220원</td><td>5.72%</td><td>10 ~ 19cm</td><td>소형</td></tr>
+                <tr><td>시바스</td><td>350원</td><td>5.14%</td><td>12 ~ 20cm</td><td>소형</td></tr>
+                <tr><td>살오징어</td><td>1,200원</td><td>2.15%</td><td>22 ~ 38cm</td><td>중형</td></tr>
+                <tr><td>메기</td><td>1,100원</td><td>2.24%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>잉어</td><td>1,000원</td><td>2.32%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>가물치</td><td>1,600원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>점농어</td><td>1,800원</td><td>1.70%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>여름삼치</td><td>1,500원</td><td>1.88%</td><td>22 ~ 38cm</td><td>중형</td></tr>
+                <tr><td>만새기</td><td>1,500원</td><td>1.83%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>부시리</td><td>4,000원</td><td>0.49%</td><td>50 ~ 80cm</td><td>대형</td></tr>
+                <tr><td>갈치</td><td>4,500원</td><td>0.40%</td><td>55 ~ 85cm</td><td>대형</td></tr>
+                <tr><td>대왕방어</td><td>12,000원</td><td>0.04%</td><td>90 ~ 135cm</td><td>휠척</td></tr>
+            </table>
+        </div>
+
+        <!-- 가을 -->
+        <div id="autumn" class="sub-section">
+            <h2>가을 어류 목록</h2>
+            <table>
+                <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
+                <tr><td>대하</td><td>300원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>꽃게</td><td>400원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>주꾸미</td><td>250원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>망둑어</td><td>120원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>홍돔</td><td>300원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>전어</td><td>200원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>말쥐치</td><td>350원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>보리멸</td><td>180원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>성대</td><td>220원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>무늬오징어</td><td>450원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>갑오징어</td><td>400원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>매둥이</td><td>150원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>가다랑어</td><td>400원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>벤자리</td><td>450원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>털게</td><td>500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>광어</td><td>1,300원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>능성어</td><td>2,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>줄무늬전갱이</td><td>1,800원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>대구</td><td>1,500원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>홍어</td><td>2,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>가오리</td><td>1,300원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>곰치</td><td>1,600원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
+                <tr><td>대문어</td><td>5,500원</td><td>0.47%</td><td>50 ~ 80cm</td><td>대형</td></tr>
+                <tr><td>가을붕장어</td><td>4,000원</td><td>0.47%</td><td>50 ~ 80cm</td><td>대형</td></tr>
+                <tr><td>청새치</td><td>12,000원</td><td>0.05%</td><td>95 ~ 210cm</td><td>휠척</td></tr>
+            </table>
+        </div>
+
+        <!-- 겨울 -->
+        <div id="winter" class="sub-section">
+            <h2>겨울 어류 목록</h2>
+            <table>
+                <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
+                <tr><td>열빙어</td><td>150원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>임연수어</td><td>280원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>물메기</td><td>300원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>열기</td><td>300원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>황점볼락</td><td>350원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>양태</td><td>300원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>도루묵</td><td>220원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>아귀</td><td>420원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>명태</td><td>250원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>홍게</td><td>400원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>방어</td><td>500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>개볼락</td><td>320원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>참문어</td><td>550원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>도치</td><td>220원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>꼼치</td><td>150원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
+                <tr><td>청기름치</td><td>200원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>용치놀래미</td><td>180원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>홍감펭</td><td>300원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>쏨뱅이</td><td>250원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>참가자미</td><td>350원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>돌가자미</td><td>500원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>흑조기</td><td>450원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
+                <tr><td>참조기</td><td>600원</td><td>0.47%</td><td>50 ~ 85cm</td><td>대형</td></tr>
+                <tr><td>붉바리</td><td>700원</td><td>0.47%</td><td>50 ~ 85cm</td><td>대형</td></tr>
+                <tr><td>청점다랑어</td><td>14,000원</td><td>0.04%</td><td>90 ~ 140cm</td><td>휠척</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link">← 메인으로 돌아가기</a>
+
+    <script>
+        // 대분류 탭 전환 함수 (농산물 / 광물 / 물고기)
+        function switchMainTab(evt, mainId) {
+            const mainSections = document.querySelectorAll('.main-section');
+            mainSections.forEach(sec => sec.classList.remove('active'));
+
+            const mainButtons = document.querySelectorAll('.main-tab-button');
+            mainButtons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(mainId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // 소분류 탭 전환 함수 (씨앗/묘목, 계절별 등)
+        function switchSubTab(evt, subId) {
+            // 클릭된 버튼이 속한 대분류 섹션 내부만 찾아서 처리
+            const parentMainSection = evt.currentTarget.closest('.main-section');
+            
+            const subSections = parentMainSection.querySelectorAll('.sub-section');
+            subSections.forEach(sec => sec.classList.remove('active'));
+
+            const subButtons = parentMainSection.querySelectorAll('.sub-tab-button');
+            subButtons.forEach(btn => btn.classList.remove('active'));
+
+            parentMainSection.querySelector('#' + subId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
