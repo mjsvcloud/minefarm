@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 규칙 - 오리진피아</title>
+    <!-- Tailwind CSS for modern layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+            
+            /* 에메랄드 포인트 컬러 시스템 (계절별 페이지와 통일) */
+            --primary-color: #059669; /* 에메랄드 포인트 컬러 */
+            --primary-bg: #ecfdf5;    /* 연한 에메랄드 배경 */
+            --primary-border: #a7f3d0;/* 연한 에메랄드 테두리 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* 메인으로 돌아가기 버튼 */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+        }
+
+        /* 규칙 카드 컨테이너 (은은한 에메랄드 틴트 적용) */
+        .rule-card {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .rule-card h2 {
+            font-size: 1.35rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-border);
+            padding-bottom: 14px;
+            font-weight: 700;
+        }
+
+        /* 개별 규칙 아이템 */
+        .rule-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rule-item {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+            transition: border-color 0.2s ease;
+        }
+
+        .rule-item:hover {
+            border-color: var(--primary-border);
+        }
+
+        .rule-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rule-desc {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .rule-desc + .rule-desc {
+            margin-top: 6px;
+        }
+
+        /* 에메랄드 강조 텍스트 */
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+            background-color: var(--primary-bg);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--primary-border);
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+            .rule-card { padding: 20px; }
+            .rule-item { padding: 14px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 메인으로 돌아가기 버튼 -->
+        <a href="index.html" class="back-home">
+            ← 메인으로 돌아가기
+        </a>
+
+        <h1>🌱 서버 규칙</h1>
+        <p class="subtitle">오리진피아 서버를 이용하기 전에 꼭 확인해야 할 필수 규칙입니다.</p>
+        
+        <!-- 1. 기본 이용 수칙 -->
+        <div class="rule-card">
+            <h2>🛡️ 1. 기본 이용 수칙</h2>
+            <div class="rule-grid">
+                <div class="rule-item">
+                    <div class="rule-title">📌 서버 입장 및 등록</div>
+                    <p class="rule-desc">지급되는 책의 1페이지에 나이를 기입하고 서명에 사용할 닉네임을 적은 뒤 서명 후 닫아주세요.</p>
+                    <p class="rule-desc">우클릭 시 관리자에게 제출되며, 확인 후 문제가 없을 시 정식 등록되어 서버를 즐기실 수 있습니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">👤 닉네임 규정 및 매너 채팅</div>
+                    <p class="rule-desc">타인에게 불쾌감을 주거나 특정 단체/개인을 비하하는 부적절한 닉네임은 사용이 제한됩니다.</p>
+                    <p class="rule-desc">상대방을 존중하며, 비속어 및 타인에게 불쾌감을 주는 언행은 엄격히 삼가주세요.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">⚙️ 부정 프로그램 및 매크로 금지</div>
+                    <p class="rule-desc">클라이언트 변조, 핵, 매크로(오토 클릭 등) 등 공정한 게임 환경을 해치는 행위는 금지됩니다.</p>
+                    <p class="rule-desc">비인가 클라이언트(엑스레이 등) 사용을 금하며, 기존 패치기에 포함된 모드만 허용됩니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">👥 부계정 및 계정 관리 제한</div>
+                    <p class="rule-desc">원활한 경제 시스템과 공정한 플레이를 위해 <span class="highlight">1인 1계정 원칙</span>을 고수합니다. (부계정 적발 시 제재)</p>
+                    <p class="rule-desc">본인 계정의 관리 책임은 본인에게 있으며, 계정 공유로 발생하는 피해는 복구해 드리지 않습니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">🏝 섬(영지) 및 건축 규칙</div>
+                    <p class="rule-desc">대부분의 건축과 농사는 본인의 메인 섬(영지) 내에서 진행해 주세요. 야생(자원 월드) 내 일반 건축은 금지됩니다.</p>
+                    <p class="rule-desc">타인을 섬에 초대(신뢰 권한 부여)하여 발생하는 아이템 분실이나 영지 훼손의 책임은 전적으로 본인에게 있습니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">⚡ 서버 랙 유발 기계 제한</div>
+                    <p class="rule-desc">지나친 서버 랙을 유발하는 과도한 무한 회로 및 비효율적인 대규모 자동화 기계는 운영진 판단하에 철거될 수 있습니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">🐛 버그 제보 및 방해 행위 금지</div>
+                    <p class="rule-desc">게임 내 버그 발견 시 악용하지 말고 즉시 운영진에게 제보해 주세요. (소중한 제보 시 보상 지급)</p>
+                    <p class="rule-desc">타인의 건축물 훼손 및 고의적인 게임 진행 방해 행위는 강력한 제재 대상이 됩니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">⚖️ 개인 분쟁 및 콘텐츠 저작권</div>
+                    <p class="rule-desc">개인 간 분쟁은 원만한 해결을 권장하며, 커뮤니티를 저해할 경우 운영진이 개입할 수 있습니다.</p>
+                    <p class="rule-desc">서버의 모든 자체 제작 스크립트 및 고유 콘텐츠는 오리진피아의 자산으로, 무단 배포 및 도용을 엄금합니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">🤝 운영진 협조</div>
+                    <p class="rule-desc">원활한 서버 운영을 위해 운영진의 안내와 지시에 적극적으로 협조해 주시길 부탁드립니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 경제 및 거래 규칙 -->
+        <div class="rule-card">
+            <h2>💰 2. 경제 및 거래 규칙</h2>
+            <div class="rule-grid">
+                <div class="rule-item">
+                    <div class="rule-title">🤝 개인 거래 책임</div>
+                    <p class="rule-desc">개인 간의 거래에서 발생하는 사기 및 피해에 대해 운영진은 원칙적으로 개입하지 않습니다.</p>
+                    <p class="rule-desc">안전한 방식을 이용하시고, 거래 전 상대방의 신뢰도를 충분히 확인하시기 바랍니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">💵 현금 거래 금지</div>
+                    <p class="rule-desc">게임 내 아이템의 플레이어 간 현금 거래(현질)는 서버 경제 균형을 위해 엄격히 금지합니다.</p>
+                    <p class="rule-desc"><span class="highlight">현질 시스템이 단 1도 없는 내수용 서버</span>입니다. 마음껏 즐겨주세요!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 아이템 복구 및 보상 규칙 -->
+        <div class="rule-card">
+            <h2>🎁 3. 아이템 복구 및 보상 규칙</h2>
+            <div class="rule-grid">
+                <div class="rule-item">
+                    <div class="rule-title">🔄 복구 기준</div>
+                    <p class="rule-desc">본인의 실수나 관리 부주의로 인한 아이템 분실은 복구가 불가능합니다.</p>
+                    <p class="rule-desc">서버 오류나 명백한 시스템 결함(인벤 세이브 오류 등)으로 인한 손실은 확인 후 최대한 보상해 드립니다.</p>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-title">🚫 복구 악용 금지</div>
+                    <p class="rule-desc">복구 시스템을 악용하거나 허위 사실을 제보하여 부당한 보상을 취하려는 경우 강력히 제재합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 운영 정책 및 면책 사항 -->
+        <div class="rule-card">
+            <h2>⚖️ 4. 운영 정책 및 면책 사항</h2>
+            <div class="rule-grid">
+                <div class="rule-item">
+                    <div class="rule-title">⚠ 제재 및 면책 안내</div>
+                    <p class="rule-desc">규칙 위반 시 위반 강도에 따라 경고, 기간 정지, 영구 정지 등 운영진 판단하에 제재가 적용됩니다.</p>
+                    <p class="rule-desc">서버 운영 사정에 따라 서비스가 예고 없이 점검·종료될 수 있으며, 이에 대한 개인적 손해는 보상하지 않습니다.</p>
+                    <p class="rule-desc">서버 건의, 버그 제보, 신고 사항은 디스코드 게시판 또는 <span class="highlight">/도움</span>을 이용해 주세요.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 메인으로 돌아가기 버튼 -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="back-home">
+                ← 메인으로 돌아가기
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

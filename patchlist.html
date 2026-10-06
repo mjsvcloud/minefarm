@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 및 패치노트 - 오리진피아</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --card-bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --accent-color: #059669; /* 에메랄드 포인트 */
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+        }
+
+        /* 섹션 카드 스타일 */
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+        }
+
+        summary {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            outline: none;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            transition: transform 0.2s;
+        }
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        /* 내부 스크롤 리스트 영역 */
+        .scroll-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 16px;
+            padding-right: 4px;
+        }
+
+        /* 스크롤바 디자인 */
+        .scroll-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scroll-list::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .scroll-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .scroll-list::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { 
+            background: #ffffff; 
+            margin-bottom: 10px; 
+            padding: 14px 18px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        li a { text-decoration: none; color: #0f172a; font-weight: 600; display: block; font-size: 0.98rem; }
+        li:hover { 
+            background: #ecfdf5; 
+            border-color: #a7f3d0;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-home">← 메인으로 돌아가기</a>
+
+        <h1>공지사항 및 패치노트</h1>
+        <p class="subtitle">서버의 주요 소식과 업데이트 내역을 한눈에 확인하세요.</p>
+
+        <!-- 공지사항 영역 (기본 접힘) -->
+        <div class="section-card">
+            <details>
+                <summary>📢 공지사항</summary>
+                <div class="scroll-list">
+                    <ul>
+					
+					
+                        <li><a href="notice_20260630-1.html">2026.06.30 | 조합법 (1)</a></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+
+        <!-- 패치노트 영역 (기본 접힘) -->
+        <div class="section-card">
+            <details>
+                <summary>🛠️ 패치노트</summary>
+                <div class="scroll-list">
+                    <ul>
+					
+                        <li><a href="patch_20260629-1.html">2026.06.29 | 1차 패치 노트</a></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <!-- 맨 위로 가기 버튼 -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});" style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #059669;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        font-weight: bold;
+        font-size: 13px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;">TOP</button>
+</body>
+</html>

@@ -2,49 +2,228 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>영지 시스템 - 오리진피아</title>
+    <!-- Tailwind CSS for modern layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
-        .section { margin-bottom: 30px; }
-        .highlight { background-color: #f8f9fa; border-left: 4px solid #3498db; padding: 15px; margin: 15px 0; }
-        ul { padding-left: 20px; }
-        li { margin: 8px 0; }
-        a { text-decoration: none; color: #3498db; font-size: 1.1em; }
-        a:hover { text-decoration: underline; }
+        :root {
+            --bg-color: #ffffff; /* 전체 배경 흰색 통일 */
+            --card-bg: #f8fafc;  /* 카드는 연한 회색 */
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --accent-color: #059669; /* 에메랄드 그린 포인트 컬러 */
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        /* 메인으로 돌아가기 버튼 */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+        }
+
+        /* 섹션 카드 스타일 */
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+        }
+
+        .section-card h2 {
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0f172a;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+
+        /* 에메랄드 톤으로 변경된 강조 박스 */
+        .highlight-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-left: 5px solid #10b981;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #065f46;
+            font-size: 0.95rem;
+        }
+
+        /* 리스트 스타일 */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 22px;
+            margin: 12px 0;
+            color: #334155;
+            font-size: 0.98rem;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* 업그레이드 정보 그리드 */
+        .upgrade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .upgrade-item {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .upgrade-item .label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .upgrade-item .value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+            .section-card { padding: 20px; }
+        }
     </style>
 </head>
 <body>
-    <h1>영지 시스템 안내</h1>
-    
-    <div class="section">
-        <h2>영지 생성 및 기본 정보</h2>
-        <div class="highlight">
-            <p><strong>하늘섬 생성권</strong>을 사용하여 자신만의 영지를 만들 수 있습니다. 생성권은 서버에 처음 입장할 때 지급됩니다.</p>
+
+    <div class="container">
+        <!-- 메인으로 돌아가기 버튼 -->
+        <a href="index.html" class="back-home">
+            ← 메인으로 돌아가기
+        </a>
+
+        <h1>영지 시스템 안내</h1>
+        <p class="subtitle">마인팜 서버의 영지 생성, 확장 및 업그레이드 규칙을 확인하세요.</p>
+        
+        <!-- 영지 생성 및 기본 정보 -->
+        <div class="section-card">
+            <h2>🏠 영지 생성 및 기본 정보</h2>
+            <div class="highlight-box">
+                <p style="margin: 0;"><strong>하늘섬 생성권</strong>을 사용하여 자신만의 영지를 만들 수 있습니다. 생성권은 서버에 처음 입장할 때 지급됩니다.</p>
+            </div>
+            <ul>
+                <li><strong>생성 방법:</strong> 하늘섬 생성권 아이템을 우클릭하여 영지를 생성합니다.</li>
+                <li><strong>기본 크기:</strong> <strong>9 × 3 × 9</strong> (x, y, z축) 크기의 영지가 생성됩니다.</li>
+            </ul>
         </div>
-        <ul>
-            <li><strong>생성 방법:</strong> 하늘섬 생성권 아이템을 우클릭하여 영지를 생성합니다.</li>
-            <li><strong>기본 크기:</strong> 9 × 3 × 9 (x, y, z축)크기의 영지가 생성됩니다.</li>
-        </ul>
+
+        <!-- 영지 확장 규칙 -->
+        <div class="section-card">
+            <h2>📏 영지 확장 규칙</h2>
+            <ul>
+                <li>영지를 업그레이드하기 전까지는 x축 및 z축 방향으로 크기를 확장할 수 없습니다.</li>
+                <li>단, <strong>y축 방향</strong>으로는 제한 없이 자유롭게 활용할 수 있습니다.</li>
+            </ul>
+        </div>
+
+        <!-- 영지 업그레이드 -->
+        <div class="section-card">
+            <h2>⬆️ 영지 업그레이드</h2>
+            <p style="color: var(--text-sub); margin-bottom: 16px; font-size: 0.95rem;">더 넓은 영지를 소유하기 위해 아래 규칙에 따라 영지를 업그레이드할 수 있습니다.</p>
+            
+            <div class="upgrade-grid">
+                <div class="upgrade-item">
+                    <div class="label">기본 비용</div>
+                    <div class="value">10,000원</div>
+                </div>
+                <div class="upgrade-item">
+                    <div class="label">확장 효과</div>
+                    <div class="value">직경 4칸 확장 (X·Z축)</div>
+                </div>
+                <div class="upgrade-item">
+                    <div class="label">비용 증가 방식</div>
+                    <div class="value">이전 비용의 1.5배</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="section">
-        <h2>영지 확장 규칙</h2>
-        <ul>
-            <li>영지를 업그레이드하기 전까지는 x축 및 z축 방향으로 크기를 확장할 수 없습니다.</li>
-            <li>단, y축 방향으로는 제한 없이 자유롭게 활용할 수 있습니다.</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>영지 업그레이드</h2>
-        <p>더 넓은 영지를 소유하기 위해 영지를 업그레이드할 수 있습니다.</p>
-        <ul>
-            <li><strong>기본 비용:</strong> 10,000원</li>
-            <li><strong>확장 효과:</strong> 업그레이드 1회당 반경 4칸씩 x축·z축 범위가 넓어집니다.</li>
-            <li><strong>비용 증가:</strong> 업그레이드를 진행할 때마다 이전 비용의 1.5배씩 비용이 상승합니다.</li>
-        </ul>
-    </div>
-    
-    <a href="index.html">← 메인으로 돌아가기</a>
 </body>
 </html>

@@ -2,97 +2,262 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>MineFarm - 마인팜</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineFarm - 귀농 타이쿤</title>
+    <!-- 넥슨 고딕 폰트 적용 -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
-        header { border-bottom: 2px solid #eee; padding-bottom: 20px; }
-        h1 { color: #2c3e50; }
-        .section { margin-top: 30px; }
-        
-        /* 링크 스타일링 */
-        .skill-tag { 
-            display: inline-block;
-            background: #e1e8ed; 
-            padding: 5px 15px; 
-            border-radius: 5px; 
-            margin-right: 8px; 
-            margin-bottom: 8px;
-            font-size: 0.9em; 
-            text-decoration: none;
-            color: #333; 
-            transition: background 0.2s;
+        :root {
+            --primary-color: #2d6a4f;
+            --primary-dark: #1b4332;
+            --accent-color: #52b788;
+            --bg-color: #ffffff; /* 메인 배경 순백색 */
+            --card-bg: #f8faf9;
+            --text-main: #2b2b2b;
+            --text-sub: #666666;
+            --border-color: #eaeaea;
         }
-        .skill-tag:hover { background: #cbd5db; }
 
-        /* 디스코드 버튼 스타일 */
-        .discord-btn {
-            display: inline-block;
-            background: #5865F2; 
-            color: white !important; 
-            padding: 10px 20px; 
-            border-radius: 5px; 
-            margin-right: 8px;
-            margin-bottom: 8px;
-            font-size: 0.9em; 
-            text-decoration: none; 
-            font-weight: bold;
-            transition: background 0.2s;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .discord-btn:hover { background: #4752c4; }
+
+        body {
+            font-family: 'NanumSquare', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 헤더 영역 */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 본문 섹션 공통 */
+        .content-body {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h2 {
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 소개말 박스 */
+        .about-box {
+            background-color: #f4f8f5;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            font-size: 1.1rem;
+            color: var(--text-sub);
+        }
+
+        /* 공지사항 배너 스타일 */
+        .notice-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f0f7f4;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: bold;
+            transition: all 0.2s ease;
+            border: 1px solid #d4e6df;
+        }
+
+        .notice-banner:hover {
+            background: #e2f0eb;
+            transform: translateY(-2px);
+        }
+
+        /* 게임 정보 그리드 카드 */
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .skill-tag {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.01);
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(45, 106, 79, 0.2);
+        }
+
+        /* 하단 액션 버튼 (다운로드 / 디스코드) */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-download {
+            background: var(--primary-dark);
+            color: white;
+            box-shadow: 0 4px 12px rgba(27, 67, 50, 0.2);
+        }
+
+        .btn-download:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-discord {
+            background: #5865F2;
+            color: white;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.2);
+        }
+
+        .btn-discord:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            header { padding: 30px 20px; }
+            header h1 { font-size: 2rem; }
+            .content-body { padding: 20px; }
+            .action-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>귀농 타이쿤</h1>
-        <p>Minecraft | Farming | harvest</p>
-    </header>
+    <div class="container">
+        <!-- 헤더 -->
+        <header>
+            <h1>🌾 귀농 타이쿤</h1>
+            <p>Minecraft &bull; Farming &bull; Harvest Server</p>
+        </header>
 
-    <div class="section">
-        <h2>About this server</h2>
-        <p>도시에서만 살던 당신! 귀농을 해보세요</p>
-    </div>
-    
-    <div class="section">
-        <h2>공지사항 및 패치노트</h2>
-        <a href="patchlist.html" style="text-decoration: none; color: #007bff; font-weight: bold;">
-            📢 최신 사항 확인하기
-        </a>
+        <div class="content-body">
+            <!-- 서버 소개 -->
+            <div class="section">
+                <h2>🌱 About this server</h2>
+                <div class="about-box">
+                    도시의 삭막한 삶에 지치셨나요? 마인크래프트 속에서 여유로운 귀농 생활을 시작해보세요!
+                </div>
+            </div>
+            
+            <!-- 공지사항 -->
+            <div class="section">
+                <h2>📢 공지사항 및 패치노트</h2>
+                <a href="patchlist.html" class="notice-banner">
+                    <span>최신 업데이트 사항 및 패치노트 확인하기</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+
+            <!-- 게임 정보 및 시스템 -->
+            <div class="section">
+                <h2>⚙️ 게임 정보 및 시스템</h2>
+                
+                <div class="grid-menu">
+                    <a href="land.html" class="skill-tag">🏡 영지</a>
+                    <a href="season.html" class="skill-tag">🌤️ 계절</a>
+                    <a href="jobs.html" class="skill-tag">⛏️ 직업</a>
+                    <a href="tool.html" class="skill-tag">🛠️ 도구</a>
+                    <a href="shop.html" class="skill-tag">🛒 상점 물품</a>
+                    <a href="food.html" class="skill-tag">🍲 요리 도감</a>
+                    <a href="hunting.html" class="skill-tag">🏹 몬스터 도감</a>
+                    <a href="rule.html" class="skill-tag">📜 규칙</a>
+                    <a href="comment.html" class="skill-tag">💬 건의&질문</a>
+                </div>
+            </div>
+
+            <!-- 하단 버튼: 다운로드, 디스코드 -->
+            <div class="action-buttons">
+                <a href="https://drive.google.com/file/d/1AnaI_Pjr9gjWk5qEMfsghN3PPEkHv661/view?usp=drive_link" class="btn btn-download" target="_blank">
+                    📥 패치파일 다운로드
+                </a>
+                <a href="https://discord.gg/SGQRsVFHk" class="btn btn-discord" target="_blank">
+                    💬 디스코드 커뮤니티 참여
+                </a>
+            </div>
+        </div>
     </div>
 
-   <div class="section">
-        <h2>게임 정보 및 시스템</h2>
-        
-        <!-- 첫 번째 줄 -->
-        <div style="margin-bottom: 10px;">
-			<a href="land.html" class="skill-tag">영지</a>
-			<a href="season.html" class="skill-tag">계절</a>
-			<a href="jobs.html" class="skill-tag">직업</a>
-			<a href="tool.html" class="skill-tag">도구</a>
-			<a href="shop.html" class="skill-tag">상점</a>
-            <a href="food.html" class="skill-tag">음식</a>
-			<a href="hunting.html" class="skill-tag">사냥</a>
-			
-			
-			
-        </div>
-		
-		<!-- 세 번째 줄 -->
-        <div style="margin-bottom: 25px;">	
-			<a href="rule.html" class="skill-tag">규칙</a>
-			<a href="comment.html" class="skill-tag">건의&질문</a>
-			
-        </div>
-
-        <!-- 하단 버튼: 다운로드, 디스코드, 그 외 -->
-        <div>
-            <a href="https://drive.google.com/file/d/1AnaI_Pjr9gjWk5qEMfsghN3PPEkHv661/view?usp=drive_link" 
-               class="skill-tag" 
-               style="background: #2c3e50; color: white; padding: 10px 20px; font-weight: bold;" 
-               target="_blank">📥패치기 다운로드</a>
-            
-            <a href="https://discord.gg/SGQRsVFHk" class="discord-btn" target="_blank">💬 Discord 링크</a>
-            
-            
-        </div>
-    </div>
+</body>
+</html>

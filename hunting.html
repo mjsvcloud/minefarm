@@ -2,208 +2,640 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>계절별 어류 목록 - 오리진피아</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>몬스터 도감 - 오리진피아</title>
+    <!-- Tailwind CSS for modern layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; max-width: 1200px; margin: 40px auto; padding: 20px; background-color: #f9f9f9; }
-        h1 { text-align: center; margin-bottom: 20px; }
-        
-        /* 판매가 공식 안내 박스 스타일 */
-        .formula-box {
-            background-color: #e8f4fd;
-            border-left: 5px solid #3498db;
-            padding: 12px 20px;
-            margin-bottom: 25px;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 1.1em;
-            color: #2c3e50;
-            font-weight: bold;
+        :root {
+            --bg-color: #ffffff; /* 배경 전체 흰색 */
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --accent-overworld: #059669; /* 오버월드/메인 강조를 에메랄드로 통일 */
+            --accent-nether: #ef4444;
+            --accent-end: #8b5cf6;
+            --border-color: #e2e8f0;
         }
-        
-        /* 탭 스타일 */
-        .tab-container { display: flex; justify-content: center; margin-bottom: 20px; }
-        .tab-button { background-color: #e0e0e0; border: none; padding: 12px 24px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: background-color 0.3s; }
-        .tab-button:not(:last-child) { border-right: 1px solid #ccc; }
-        .tab-button.active { background-color: #3498db; color: white; }
-        .tab-button:hover:not(.active) { background-color: #d0d0d0; }
 
-        /* 콘텐츠 섹션 스타일 */
-        .season-section { display: none; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .season-section.active { display: block; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 0.95em; }
-        th { background-color: #f2f2f2; color: #333; }
-        .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #3498db; font-size: 1.1em; }
-        .back-link:hover { text-decoration: underline; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* 메인으로 돌아가기 버튼 */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .back-home:hover {
+            background-color: #ecfdf5;
+            color: #059669;
+            border-color: #059669;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            /* 에메랄드빛 그라데이션으로 변경 */
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+        }
+
+        /* 검색창 */
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 550px;
+            padding: 14px 22px;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 9999px;
+            outline: none;
+            transition: all 0.2s ease;
+            background-color: #ffffff;
+            color: var(--text-main);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        .search-input:focus {
+            border-color: #059669; /* 포커스 시 에메랄드 */
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+        }
+
+        /* 탭 버튼 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: var(--text-sub);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: #059669; /* 활성 탭 및 호버 시 에메랄드 */
+            color: #ffffff;
+            border-color: #059669;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+        }
+
+        /* 카드 그리드 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        .card.overworld { border-top: 6px solid var(--accent-overworld); }
+        .card.nether { border-top: 6px solid var(--accent-nether); }
+        .card.end { border-top: 6px solid var(--accent-end); }
+
+        .card h2 {
+            font-size: 1.35rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #0f172a;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .badge.overworld { background: #ecfdf5; color: #065f46; }
+        .badge.nether { background: #fee2e2; color: #991b1b; }
+        .badge.end { background: #ede9fe; color: #5b21b6; }
+
+        .mob-names {
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #334155;
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 사냥꾼 드롭 확률 안내 박스 (에메랄드 톤으로 정돈) */
+        .hunter-stat-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.88rem;
+            color: #065f46;
+        }
+
+        .hunter-stat-box .title {
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            color: #047857;
+        }
+
+        /* 드롭 테이블 */
+        .drop-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .drop-table th {
+            text-align: left;
+            padding: 6px 8px;
+            color: var(--text-sub);
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            background-color: #ffffff;
+        }
+
+        .drop-table td {
+            padding: 9px 8px;
+            border-bottom: 1px solid var(--border-color);
+            color: #1e293b;
+        }
+
+        .drop-table tr:hover td {
+            background-color: #ecfdf5;
+        }
+
+        .drop-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rate-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .rate-100 { background: #ecfdf5; color: #065f46; }
+        .rate-high { background: #fef3c7; color: #b45309; }
+        .rate-low { background: #fee2e2; color: #991b1b; }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>계절별 어류 목록 - 오리진피아</h1>
+    <div class="container">
+        <!-- 메인으로 돌아가기 버튼 (원하시는 주소로 href 수정 가능) -->
+        <a href="index.html" class="back-home">
+            ← 메인으로 돌아가기
+        </a>
 
-    <!-- 판매가 계산 공식 안내 -->
-    <div class="formula-box">
-        판매가 = 가격 × 낚은 크기 / 최소 크기
+        <h1>몬스터 도감</h1>
+        <p class="subtitle">오버월드, 네더월드, 엔드월드 차원별 몬스터 드롭 및 사냥꾼 추가 보정 확률 안내</p>
+        
+        <!-- 검색창 -->
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="몬스터 이름이나 아이템을 검색해보세요 (예: 좀비, 블레이즈, 셜커)..." onkeyup="filterCards()">
+        </div>
+
+        <!-- 카테고리 필터 탭 -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="filterCategory('all')">전체 보기</button>
+            <button class="tab-btn" onclick="filterCategory('overworld')">오버월드 (Overworld)</button>
+            <button class="tab-btn" onclick="filterCategory('nether')">네더월드 (Nether)</button>
+            <button class="tab-btn" onclick="filterCategory('end')">엔드월드 (End)</button>
+        </div>
+        
+        <!-- 카드 그리드 영역 -->
+        <div class="grid" id="cardGrid">
+
+            <!-- [오버월드] 1. 좀비 계열 -->
+            <div class="card overworld" data-category="overworld" data-keywords="좀비 주민좀비 허스크 드라우드 썩은살점 철주괴 당근 감자">
+                <h2>좀비 계열 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">좀비, 주민 좀비, 허스크, 드라우드</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>썩은살점</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>철주괴</td><td style="text-align: right;"><span class="rate-tag rate-high">50%</span></td></tr>
+                    <tr><td>당근 / 감자</td><td style="text-align: right;"><span class="rate-tag rate-high">35%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 2. 스켈레톤 계열 -->
+            <div class="card overworld" data-category="overworld" data-keywords="스켈레톤 스트레이 보그드 뼈 화살">
+                <h2>스켈레톤 계열 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">스켈레톤, 스트레이, 보그드</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>뼈</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>화살</td><td style="text-align: right;"><span class="rate-tag rate-high">75%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 3. 크리퍼 -->
+            <div class="card overworld" data-category="overworld" data-keywords="크리퍼 화약 TNT">
+                <h2>크리퍼 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">크리퍼</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>화약</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>TNT</td><td style="text-align: right;"><span class="rate-tag rate-high">25%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 4. 거미 계열 -->
+            <div class="card overworld" data-category="overworld" data-keywords="거미 동굴거미 거미줄 거미눈">
+                <h2>거미 계열 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">거미, 동굴 거미</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>거미줄</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>거미눈</td><td style="text-align: right;"><span class="rate-tag rate-high">65%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 5. 마녀 -->
+            <div class="card overworld" data-category="overworld" data-keywords="마녀 유리병 레드스톤 발광석가루 설탕 거미눈 화약">
+                <h2>마녀 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">마녀</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>유리병</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>레드스톤 / 발광석</td><td style="text-align: right;"><span class="rate-tag rate-high">55%</span></td></tr>
+                    <tr><td>설탕 / 화약 / 거미눈</td><td style="text-align: right;"><span class="rate-tag rate-high">40%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 6. 슬라임 -->
+            <div class="card overworld" data-category="overworld" data-keywords="슬라임 슬라임볼">
+                <h2>슬라임 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">슬라임 (대/중/소)</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>슬라임볼</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 7. 좀벌레 -->
+            <div class="card overworld" data-category="overworld" data-keywords="좀벌레 돌">
+                <h2>좀벌레 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">좀벌레</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>돌 (블록 파편)</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 8. 가디언 & 엘더가디언 -->
+            <div class="card overworld" data-category="overworld" data-keywords="가디언 엘더가디언 프리즈마린조각 프리즈마린결정 대구 바다스펀지">
+                <h2>가디언 / 엘더가디언 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">가디언, 엘더 가디언</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>프리즈마린 조각</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>프리즈마린 결정</td><td style="text-align: right;"><span class="rate-tag rate-high">50%</span></td></tr>
+                    <tr><td>바다 스펀지 (엘더 전용)</td><td style="text-align: right;"><span class="rate-tag rate-low">100% (확정)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 9. 벡스, 에보커, 빈디케이터, 약탈자, 래비저 -->
+            <div class="card overworld" data-category="overworld" data-keywords="벡스 에보커 빈디케이터 약탈자 래비저 에메랄드 철주괴 불사의토템 현판">
+                <h2>일레저 & 레이드 몹 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">벡스, 에보커, 빈디케이터, 약탈자, 래비저</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>에메랄드</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>철주괴 / 현판</td><td style="text-align: right;"><span class="rate-tag rate-high">40%</span></td></tr>
+                    <tr><td>불사의 토템 (에보커)</td><td style="text-align: right;"><span class="rate-tag rate-high">20%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 10. 워든 -->
+            <div class="card overworld" data-category="overworld" data-keywords="워든 스쿨크촉매 경험치병">
+                <h2>워든 <span class="badge overworld">오버월드</span></h2>
+                <div class="mob-names">워든</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>스쿨크 촉매</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>경험치 병</td><td style="text-align: right;"><span class="rate-tag rate-high">60%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [오버월드] 11. 팬텀 -->
+            <div class="card overworld" data-category="overworld" data-keywords="팬텀 팬텀의막">
+                <h2>팬텀 <span class="badge overworld">오버월드 야간</span></h2>
+                <div class="mob-names">팬텀</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>팬텀의막</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+
+            <!-- [네더월드] 1. 블레이즈 -->
+            <div class="card nether" data-category="nether" data-keywords="블레이즈 블레이즈막대 발광석가루">
+                <h2>블레이즈 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">블레이즈</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>블레이즈막대</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>발광석가루</td><td style="text-align: right;"><span class="rate-tag rate-high">45%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 2. 가스트 -->
+            <div class="card nether" data-category="nether" data-keywords="가스트 가스트의눈물 화약">
+                <h2>가스트 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">가스트</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>가스트의눈물</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>화약</td><td style="text-align: right;"><span class="rate-tag rate-high">70%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 3. 마그마큐브 -->
+            <div class="card nether" data-category="nether" data-keywords="마그마큐브 마그마크림">
+                <h2>마그마큐브 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">마그마큐브 (대/중/소)</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>마그마크림</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 4. 피글린 & 화난 피글린 -->
+            <div class="card nether" data-category="nether" data-keywords="피글린 화난피글린 금조각 돼지고기 금장비">
+                <h2>피글린 계열 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">피글린, 화난 피글린</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>금조각</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>생고기 / 금장비 부품</td><td style="text-align: right;"><span class="rate-tag rate-high">35%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 5. 좀비 피글린 -->
+            <div class="card nether" data-category="nether" data-keywords="좀비피글린 금조각 썩은살점 금주괴">
+                <h2>좀비피글린 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">좀비 피글린</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>금조각</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>썩은살점</td><td style="text-align: right;"><span class="rate-tag rate-high">55%</span></td></tr>
+                    <tr><td>금주괴</td><td style="text-align: right;"><span class="rate-tag rate-high">25%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 6. 위더 스켈레톤 -->
+            <div class="card nether" data-category="nether" data-keywords="위더스켈레톤 석탄 뼈 위더스켈레톤머리">
+                <h2>위더스켈레톤 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">위더 스켈레톤</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>석탄 / 뼈</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>위더스켈레톤 머리</td><td style="text-align: right;"><span class="rate-tag rate-low">6% (희귀)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [네더월드] 7. 호글린 & 조글린 -->
+            <div class="card nether" data-category="nether" data-keywords="호글린 조글린 돼지고기 가죽">
+                <h2>호글린 / 조글린 <span class="badge nether">네더월드</span></h2>
+                <div class="mob-names">호글린, 조글린</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>익히지 않은 돼지고기</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>가죽</td><td style="text-align: right;"><span class="rate-tag rate-high">45%</span></td></tr>
+                </table>
+            </div>
+
+
+            <!-- [엔드월드] 1. 엔더맨 -->
+            <div class="card end" data-category="end" data-keywords="엔더맨 엔더진주 코러스푸룻">
+                <h2>엔더맨 <span class="badge end">엔드월드</span></h2>
+                <div class="mob-names">엔더맨</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>엔더진주</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                    <tr><td>코러스 푸룻 (엔드 특화)</td><td style="text-align: right;"><span class="rate-tag rate-high">30%</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [엔드월드] 2. 엔더마이트 -->
+            <div class="card end" data-category="end" data-keywords="엔더마이트 엔드스톤 진주가루">
+                <h2>엔더마이트 <span class="badge end">엔드월드</span></h2>
+                <div class="mob-names">엔더마이트</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>엔드스톤 파편</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+            <!-- [엔드월드] 3. 셜커 -->
+            <div class="card end" data-category="end" data-keywords="셜커 셜커껍질">
+                <h2>셜커 <span class="badge end">엔드월드</span></h2>
+                <div class="mob-names">셜커</div>
+                <div class="hunter-stat-box">
+                    <div class="title"><span>사냥꾼 드롭 보정 안내</span><span>적용 방식</span></div>
+                    <div>사냥꾼의 드롭률 판정이 발동했을 때 아래의 확률로 추가 전리품을 획득합니다.</div>
+                </div>
+                <table class="drop-table">
+                    <tr><th>아이템</th><th style="width: 90px; text-align: right;">확률</th></tr>
+                    <tr><td>셜커껍질</td><td style="text-align: right;"><span class="rate-tag rate-100">100% (기본)</span></td></tr>
+                </table>
+            </div>
+
+        </div>
     </div>
-
-    <!-- 탭 버튼 -->
-    <div class="tab-container">
-        <button class="tab-button active" onclick="switchTab(event, 'spring')">봄</button>
-        <button class="tab-button" onclick="switchTab(event, 'summer')">여름</button>
-        <button class="tab-button" onclick="switchTab(event, 'autumn')">가을</button>
-        <button class="tab-button" onclick="switchTab(event, 'winter')">겨울</button>
-    </div>
-
-    <!-- 봄 -->
-    <div id="spring" class="season-section active">
-        <h2>봄 어류 목록</h2>
-        <table>
-            <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
-            <tr><td>멸치</td><td>1,000원</td><td>6.49%</td><td>5 ~ 12cm</td><td>소형</td></tr>
-            <tr><td>망상어</td><td>1,500원</td><td>6.26%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>학공치</td><td>2,000원</td><td>6.03%</td><td>12 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>자리돔</td><td>1,800원</td><td>6.12%</td><td>8 ~ 15cm</td><td>소형</td></tr>
-            <tr><td>실치</td><td>1,500원</td><td>6.40%</td><td>3 ~ 8cm</td><td>소형</td></tr>
-            <tr><td>볼락</td><td>3,000원</td><td>5.57%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>노래미</td><td>2,500원</td><td>5.80%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>쥐치</td><td>3,500원</td><td>5.33%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>청어</td><td>2,000원</td><td>6.03%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>독가시치</td><td>3,000원</td><td>5.47%</td><td>12 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>황어</td><td>2,200원</td><td>5.94%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>가자미</td><td>4,000원</td><td>5.19%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>돌돔</td><td>5,000원</td><td>5.01%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>뱅에돔</td><td>4,500원</td><td>5.10%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>참돔</td><td>5,000원</td><td>4.87%</td><td>10 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>도다리</td><td>12,000원</td><td>2.32%</td><td>22 ~ 38cm</td><td>중형</td></tr>
-            <tr><td>우럭</td><td>14,000원</td><td>2.09%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>감성돔</td><td>16,000원</td><td>1.86%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>숭어</td><td>10,000원</td><td>2.41%</td><td>20 ~ 35cm</td><td>중형</td></tr>
-            <tr><td>농어</td><td>18,000원</td><td>1.76%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>자바리</td><td>20,000원</td><td>1.48%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>민어</td><td>22,000원</td><td>1.39%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>삼치</td><td>40,000원</td><td>0.56%</td><td>45 ~ 75cm</td><td>대형</td></tr>
-            <tr><td>붕장어</td><td>45,000원</td><td>0.46%</td><td>50 ~ 80cm</td><td>대형</td></tr>
-            <tr><td>대형민어</td><td>100,000원</td><td>0.05%</td><td>85 ~ 115cm</td><td>휠척</td></tr>
-        </table>
-    </div>
-
-    <!-- 여름 -->
-    <div id="summer" class="season-section">
-        <h2>여름 어류 목록</h2>
-        <table>
-            <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
-            <tr><td>피라미</td><td>1,200원</td><td>6.26%</td><td>6 ~ 14cm</td><td>소형</td></tr>
-            <tr><td>은어</td><td>2,500원</td><td>5.59%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>블루길</td><td>1,500원</td><td>6.17%</td><td>8 ~ 15cm</td><td>소형</td></tr>
-            <tr><td>꺽지</td><td>2,200원</td><td>5.72%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>날치</td><td>2,800원</td><td>5.45%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>꽁치</td><td>1,800원</td><td>5.90%</td><td>15 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>고등어</td><td>2,000원</td><td>5.81%</td><td>15 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>전갱이</td><td>2,200원</td><td>5.72%</td><td>12 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>한치</td><td>4,000원</td><td>5.01%</td><td>12 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>쏘가리</td><td>4,500원</td><td>4.92%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>붕어</td><td>1,500원</td><td>6.03%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>배스</td><td>1,800원</td><td>5.90%</td><td>12 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>누치</td><td>2,000원</td><td>5.81%</td><td>10 ~ 18cm</td><td>소형</td></tr>
-            <tr><td>강아치</td><td>2,200원</td><td>5.72%</td><td>10 ~ 19cm</td><td>소형</td></tr>
-            <tr><td>시바스</td><td>3,500원</td><td>5.14%</td><td>12 ~ 20cm</td><td>소형</td></tr>
-            <tr><td>살오징어</td><td>12,000원</td><td>2.15%</td><td>22 ~ 38cm</td><td>중형</td></tr>
-            <tr><td>메기</td><td>11,000원</td><td>2.24%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>잉어</td><td>10,000원</td><td>2.32%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>가물치</td><td>16,000원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>점농어</td><td>18,000원</td><td>1.70%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>여름삼치</td><td>15,000원</td><td>1.88%</td><td>22 ~ 38cm</td><td>중형</td></tr>
-            <tr><td>만새기</td><td>15,000원</td><td>1.83%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>부시리</td><td>40,000원</td><td>0.49%</td><td>50 ~ 80cm</td><td>대형</td></tr>
-            <tr><td>갈치</td><td>45,000원</td><td>0.40%</td><td>55 ~ 85cm</td><td>대형</td></tr>
-            <tr><td>대왕방어</td><td>120,000원</td><td>0.04%</td><td>90 ~ 135cm</td><td>휠척</td></tr>
-        </table>
-    </div>
-
-    <!-- 가을 -->
-    <div id="autumn" class="season-section">
-        <h2>가을 어류 목록</h2>
-        <table>
-            <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
-            <tr><td>대하</td><td>3,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>꽃게</td><td>4,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>주꾸미</td><td>2,500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>망둑어</td><td>1,200원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>홍돔</td><td>3,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>전어</td><td>2,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>말쥐치</td><td>3,500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>보리멸</td><td>1,800원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>성대</td><td>2,200원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>무늬오징어</td><td>4,500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>갑오징어</td><td>4,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>매둥이</td><td>1,500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>가다랑어</td><td>4,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>벤자리</td><td>4,500원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>털게</td><td>5,000원</td><td>5.62%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>광어</td><td>13,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>능성어</td><td>20,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>줄무늬전갱이</td><td>18,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>대구</td><td>15,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>홍어</td><td>20,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>가오리</td><td>13,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>곰치</td><td>16,000원</td><td>2.11%</td><td>25 ~ 42cm</td><td>중형</td></tr>
-            <tr><td>대문어</td><td>55,000원</td><td>0.47%</td><td>50 ~ 80cm</td><td>대형</td></tr>
-            <tr><td>가을붕장어</td><td>40,000원</td><td>0.47%</td><td>50 ~ 80cm</td><td>대형</td></tr>
-            <tr><td>청새치</td><td>120,000원</td><td>0.05%</td><td>95 ~ 210cm</td><td>휠척</td></tr>
-        </table>
-    </div>
-
-    <!-- 겨울 -->
-    <div id="winter" class="season-section">
-        <h2>겨울 어류 목록</h2>
-        <table>
-            <tr><th>이름</th><th>가격</th><th>확률</th><th>사이즈범위</th><th>범주</th></tr>
-            <tr><td>열빙어</td><td>1,500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>임연수어</td><td>2,800원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>물메기</td><td>3,000원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>열기</td><td>3,000원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>황점볼락</td><td>3,500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>양태</td><td>3,000원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>도루묵</td><td>2,200원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>아귀</td><td>4,200원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>명태</td><td>2,500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>홍게</td><td>4,000원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>방어</td><td>5,000원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>개볼락</td><td>3,200원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>참문어</td><td>5,500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>도치</td><td>2,200원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>꼼치</td><td>1,500원</td><td>5.76%</td><td>8 ~ 16cm</td><td>소형</td></tr>
-            <tr><td>청기름치</td><td>2,000원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>용치놀래미</td><td>1,800원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>홍감펭</td><td>3,000원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>쏨뱅이</td><td>2,500원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>참가자미</td><td>3,500원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>돌가자미</td><td>5,000원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>흑조기</td><td>4,500원</td><td>1.79%</td><td>25 ~ 40cm</td><td>중형</td></tr>
-            <tr><td>참조기</td><td>6,000원</td><td>0.47%</td><td>50 ~ 85cm</td><td>대형</td></tr>
-            <tr><td>붉바리</td><td>7,000원</td><td>0.47%</td><td>50 ~ 85cm</td><td>대형</td></tr>
-            <tr><td>청점다랑어</td><td>140,000원</td><td>0.04%</td><td>90 ~ 140cm</td><td>휠척</td></tr>
-        </table>
-    </div>
-
-    <a href="index.html" class="back-link">← 메인으로 돌아가기</a>
 
     <script>
-        function switchTab(evt, seasonId) {
-            // 모든 섹션 숨기기
-            const sections = document.querySelectorAll('.season-section');
-            sections.forEach(sec => sec.classList.remove('active'));
+        let currentCategory = 'all';
 
-            // 모든 탭 버튼 활성화 해제
-            const buttons = document.querySelectorAll('.tab-button');
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // 탭 버튼 활성화 상태 변경
+            const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-            // 선택한 섹션 표시 및 버튼 활성화
-            document.getElementById(seasonId).classList.add('active');
-            evt.currentTarget.classList.add('active');
+            filterCards();
+        }
+
+        function filterCards() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
+                
+                const matchesCategory = (currentCategory === 'all' || category === currentCategory);
+                const matchesSearch = (keywords.includes(query) || query === '');
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
     </script>
-
 </body>
 </html>

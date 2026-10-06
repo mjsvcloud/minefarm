@@ -2,29 +2,377 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>직업 목록 - 오리진피아</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직업 목록 및 상세 정보 - 오리진피아</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-        .section { margin-bottom: 30px; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 10px 0; }
-        a { text-decoration: none; color: #3498db; font-size: 1.2em; }
-        a:hover { text-decoration: underline; }
+        :root {
+            --bg-color: #ffffff; /* 전체 배경을 깔끔한 흰색으로 변경 */
+            --card-bg: #f8fafc; /* 카드는 아주 연한 회색빛 백그라운드 */
+            --text-main: #064e3b; /* 짙은 에메랄드 톤의 메인 텍스트 */
+            --text-sub: #4b5563;
+            --border-color: #e2e8f0; /* 부드러운 테두리 */
+            --accent-green: #059669; /* 메인 포인트 컬러 (에메랄드) */
+        }
+
+        body {
+            font-family: 'Pretendard', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* 상단 뒤로가기 및 제목 */
+        .header-area {
+            margin-bottom: 25px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background-color: #f0fdf4;
+            color: var(--accent-green);
+            border-color: #a7f3d0;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #065f46;
+            margin: 0 0 5px 0;
+        }
+
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* 메인 레이아웃 (좌우 2단 분할) */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* 좌측 직업 선택 메뉴 카드 */
+        .menu-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .menu-card h2 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .job-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .job-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+            color: var(--text-sub);
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .job-btn:hover {
+            background-color: #f0fdf4;
+            color: var(--accent-green);
+            border-color: #a7f3d0;
+        }
+
+        .job-btn.active {
+            background-color: var(--accent-green);
+            color: #ffffff;
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+        }
+
+        /* 우측 상세 정보 패널 */
+        .content-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            min-height: 480px;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        /* 테이블 스타일 */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f0fdf4; /* 테이블 헤더에 싱그러운 초록빛 포인트 */
+            color: #065f46;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tr:hover td {
+            background-color: #f9fafb;
+        }
+
+        .skill-name {
+            font-weight: normal;
+            color: var(--text-main);
+        }
+
+        .exp-cell {
+            white-space: nowrap;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        /* 반응형 모바일 대응 */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>직업 목록</h1>
-    
-    <div class="section">
-        <h2>근거리</h2>
-			<li><a href="job-miner.html">광부</a></li>
-            <li><a href="job-fisher.html">어부</a></li>
-            <li><a href="job-farmer.html">농부</a></li>
-            <li><a href="job-chef.html">요리사</a></li>
-            <li><a href="job-hunter.html">사냥꾼</a></li>
-        </ul>
+
+    <div class="container">
+        <!-- 상단 헤더 -->
+        <div class="header-area">
+            <a href="index.html" class="back-home">
+                <span>←</span> 메인으로 돌아가기
+            </a>
+            <h1>마인팜 직업 가이드</h1>
+            <p class="subtitle">좌측에서 직업을 선택하여 레벨별 효과와 필요 경험치를 확인하세요.</p>
+        </div>
+
+        <!-- 메인 콘텐츠 구역 (좌우 분할) -->
+        <div class="main-layout">
+            
+            <!-- 좌측 직업 선택 메뉴 -->
+            <div class="menu-card">
+                <h2>🛡️️ 생산 및 채집 직업</h2>
+                <ul class="job-menu-list">
+                    <li><button class="job-btn active" onclick="switchJob('miner', this)">⛏️ 광부 <span>➔</span></button></li>
+                    <li><button class="job-btn" onclick="switchJob('fisher', this)">🎣 어부 <span>➔</span></button></li>
+                    <li><button class="job-btn" onclick="switchJob('farmer', this)">🌾 농부 <span>➔</span></button></li>
+                    <li><button class="job-btn" onclick="switchJob('chef', this)">🍳 요리사 <span>➔</span></button></li>
+                    <li><button class="job-btn" onclick="switchJob('hunter', this)">🏹 사냥꾼 <span>➔</span></button></li>
+                </ul>
+            </div>
+
+            <!-- 우측 상세 정보 패널 -->
+            <div class="content-card">
+                <div class="content-header">
+                    <h2 id="job-title" class="content-title">⛏️ 광부 상세 정보</h2>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">레벨</th>
+                                <th style="width: 65%;">레벨별 효과</th>
+                                <th style="width: 20%; white-space: nowrap;">필요 경험치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="job-table-body">
+                            <!-- JS로 동적 렌더링 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </div>
-    
-    <a href="index.html">← 메인으로 돌아가기</a>
+
+    <script>
+        const jobData = {
+            miner: {
+                name: "⛏️ 광부 상세 정보",
+                data: [
+                    { level: "1lv", effect: "곡괭이에 내구성 1 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(50% 확률로 내구도 소모)</span>", exp: "50" },
+                    { level: "2lv", effect: "곡괭이에 효율 1 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(효율 Ⅰ: 파괴속도 증가량 2)</span>", exp: "100" },
+                    { level: "3lv", effect: "곡괭이에 행운 1 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(평균 1.33배 드롭)</span>", exp: "200" },
+                    { level: "4lv", effect: "곡괭이에 내구성 2 가 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(33% 확률로 내구도 소모)</span>", exp: "400" },
+                    { level: "5lv", effect: "곡괭이에 효율 3 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(효율 Ⅲ: 파괴속도 증가량 10)</span>", exp: "800" },
+                    { level: "6lv", effect: "곡괭이에 행운 2 가 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(평균 1.75배 드롭)</span>", exp: "1,600" },
+                    { level: "7lv", effect: "곡괭이에 내구성 3 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(25% 확률로 내구도 소모)</span>", exp: "3,200" },
+                    { level: "8lv", effect: "곡괭이에 효율 5 가 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(효율 Ⅴ: 파괴속도 증가량 26)</span>", exp: "6,400" },
+                    { level: "9lv", effect: "곡괭이에 행운 3 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(평균 2.2배 드롭)</span>", exp: "13,000" },
+                    { level: "10lv", effect: "광석 채광시 인근의 광석을 동시 채광한다<br><span style='font-size: 0.9em; color: #6b7280;'>(주변의 광석까지 한 번에 캐내는 광역 채광 효과 발동)</span>", exp: "26,000" }
+                ]
+            },
+            fisher: {
+                name: "🎣 어부 상세 정보",
+                data: [
+                    { level: "1lv", effect: "1% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(낚은 물고기의 크기가 최고 기록으로 고정)</span>", exp: "25" },
+                    { level: "2lv", effect: "낚싯대에 미끼 1 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(미끼 Ⅰ: 5초 단축)</span>", exp: "50" },
+                    { level: "3lv", effect: "2% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 소폭 증가)</span>", exp: "100" },
+                    { level: "4lv", effect: "3% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 상승)</span>", exp: "200" },
+                    { level: "5lv", effect: "낚싯대에 미끼 2 가 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(미끼 Ⅱ: 10초 단축)</span>", exp: "400" },
+                    { level: "6lv", effect: "5% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 중급 도달)</span>", exp: "800" },
+                    { level: "7lv", effect: "6% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 추가 상승)</span>", exp: "1,600" },
+                    { level: "8lv", effect: "낚싯대에 미끼 3 이 붙는다<br><span style='font-size: 0.9em; color: #6b7280;'>(미끼 Ⅲ: 15초 단축)</span>", exp: "3,200" },
+                    { level: "9lv", effect: "8% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 고단 도달)</span>", exp: "6,500" },
+                    { level: "10lv", effect: "10% 확률로 크기가 최대치가 된다<br><span style='font-size: 0.9em; color: #6b7280;'>(최대 크기 획득 확률 최고치 도달)</span>", exp: "13,000" }
+                ]
+            },
+            farmer: {
+                name: "🌾 농부 상세 정보",
+                data: [
+                    { level: "1lv", effect: "초보자 물 뿌리개 획득", exp: "50" },
+                    { level: "2lv", effect: "5분마다 뼛가루 1개 획득", exp: "100" },
+                    { level: "3lv", effect: "밭을 갈 때 3x3만큼 갈림", exp: "200" },
+                    { level: "4lv", effect: "5분마다 주변 2칸 범위에 성장 촉진 1회", exp: "400" },
+                    { level: "5lv", effect: "3분마다 뼛가루 1개 획득", exp: "800" },
+                    { level: "6lv", effect: "밭을 갈 때 5x5만큼 갈림", exp: "1,600" },
+                    { level: "7lv", effect: "3분마다 주변 3칸 범위에 성장 촉진 1회", exp: "3,200" },
+                    { level: "8lv", effect: "1분마다 뼛가루 1개 획득", exp: "6,400" },
+                    { level: "9lv", effect: "밭을 갈 때 7x7만큼 갈림", exp: "13,000" },
+                    { level: "10lv", effect: "1분마다 주변 4칸 범위에 성장 촉진 1회", exp: "26,000" }
+                ]
+            },
+            chef: {
+                name: "🍳 요리사 상세 정보",
+                data: [
+                    { level: "1lv", effect: "1% 확률로 대성공<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득한다)</span>", exp: "25" },
+                    { level: "2lv", effect: "2% 확률로 재료소모X<br><span style='font-size: 0.9em; color: #6b7280;'>(요리 시 재료를 소모하지 않는다)</span>", exp: "50" },
+                    { level: "3lv", effect: "3% 확률로 대성공<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득한다)</span>", exp: "100" },
+                    { level: "4lv", effect: "4% 확률로 재료소모X<br><span style='font-size: 0.9em; color: #6b7280;'>(요리 시 재료를 소모하지 않는다)</span>", exp: "200" },
+                    { level: "5lv", effect: "5% 확률로 대성공<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득한다)</span>", exp: "400" },
+                    { level: "6lv", effect: "6% 확률로 재료소모X<br><span style='font-size: 0.9em; color: #6b7280;'>(요리 시 재료를 소모하지 않는다)</span>", exp: "800" },
+                    { level: "7lv", effect: "7% 확률로 대성공<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득한다)</span>", exp: "1,600" },
+                    { level: "8lv", effect: "8% 확률로 재료소모X<br><span style='font-size: 0.9em; color: #6b7280;'>(요리 시 재료를 소모하지 않는다)</span>", exp: "3,200" },
+                    { level: "9lv", effect: "9% 확률로 대성공<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득한다)</span>", exp: "6,500" },
+                    { level: "10lv", effect: "10% 확률로 대성공, 재료소모X<br><span style='font-size: 0.9em; color: #6b7280;'>(요리를 2배로 획득하고 재료를 소모하지 않는다)</span>", exp: "13,000" }
+                ]
+            },
+            hunter: {
+                name: "🏹 사냥꾼 상세 정보",
+                data: [
+                    { level: "1lv", effect: "1% 확률로 1개 더 획득<br><span style='font-size: 0.9em; color: #6b7280;'>(레벨당 확률이 1%씩 증가하여 드랍 아이템 추가 획득 확률 상승)</span>", exp: "50" },
+                    { level: "2lv", effect: "이동속도 +20%<br><span style='font-size: 0.9em; color: #6b7280;'>(기본 이동 속도가 대폭 증가하여 필드 이동 및 사냥 효율 향상)</span>", exp: "100" },
+                    { level: "3lv", effect: "무기 약탈 1<br><span style='font-size: 0.9em; color: #6b7280;'>(무기에 약탈 I 인첸트가 붙는다 - 몬스터가 주는 아이템의 최대 개수가 레벨당 1개씩 늘어남, 최대 1개 추가 드롭 시도)</span>", exp: "200" },
+                    { level: "4lv", effect: "체력 +10<br><span style='font-size: 0.9em; color: #6b7280;'>(캐릭터의 최대 생명력이 10만큼 영구적으로 증가)</span>", exp: "400" },
+                    { level: "5lv", effect: "10초마다 체력 2 회복<br><span style='font-size: 0.9em; color: #6b7280;'>(전투 및 이동 중 10초 주기로 생명력이 2씩 자동 재생)</span>", exp: "800" },
+                    { level: "6lv", effect: "무기 약탈 2<br><span style='font-size: 0.9em; color: #6b7280;'>(무기에 약탈 II 인첸트가 붙는다 - 몬스터가 주는 아이템의 최대 개수가 레벨당 1개씩 늘어남, 최대 2개 추가 드롭 시도)</span>", exp: "1,600" },
+                    { level: "7lv", effect: "치명타 확률 +7%<br><span style='font-size: 0.9em; color: #6b7280;'>(공격 시 치명타가 터질 확률이 7% 증가하여 화력 증대)</span>", exp: "3,200" },
+                    { level: "8lv", effect: "몬스터 추가 데미지 +5<br><span style='font-size: 0.9em; color: #6b7280;'>(몬스터를 상대로 고정 피해량 5가 추가로 적용)</span>", exp: "6,400" },
+                    { level: "9lv", effect: "무기 약탈 3<br><span style='font-size: 0.9em; color: #6b7280;'>(무기에 약탈 III 인첸트가 붙는다 - 몬스터가 주는 아이템의 최대 개수가 레벨당 1개씩 늘어남, 최대 3개 추가 드롭 시도)</span>", exp: "13,000" },
+                    { level: "10lv", effect: "체력흡수 +1<br><span style='font-size: 0.9em; color: #6b7280;'>(적 타격 시 체력을 흡수하여 생존력을 극대화)</span>", exp: "26,000" }
+                ]
+            }
+        };
+
+        function switchJob(jobKey, clickedBtn) {
+            document.querySelectorAll('.job-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            clickedBtn.classList.add('active');
+
+            const selectedJob = jobData[jobKey];
+            document.getElementById('job-title').innerText = selectedJob.name;
+
+            const tbody = document.getElementById('job-table-body');
+            tbody.innerHTML = '';
+
+            selectedJob.data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600; color: #059669;">${row.level}</td>
+                    <td class="skill-name">${row.effect}</td>
+                    <td class="exp-cell">${row.exp}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.onload = function() {
+            const firstBtn = document.querySelector('.job-btn');
+            switchJob('miner', firstBtn);
+        };
+    </script>
+
 </body>
-</html>
+</html>	

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 요리 도감 - 오리진피아</title>
+    <!-- Tailwind CSS for modern layout utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+            
+            /* 에메랄드 포인트 컬러 시스템 */
+            --primary-color: #059669; 
+            --primary-bg: #ecfdf5;    
+            --primary-border: #a7f3d0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* 메인으로 돌아가기 버튼 */
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+        }
+
+        /* 카테고리 카드 스타일 */
+        .category-card {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card h2 {
+            font-size: 1.35rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-border);
+            padding-bottom: 14px;
+            font-weight: 700;
+        }
+
+        /* 요리 목록 그리드 레이아웃 */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .food-item {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .food-item:hover {
+            border-color: var(--primary-border);
+            background-color: var(--primary-bg);
+            color: var(--primary-color);
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            h1 { font-size: 2rem; }
+            .category-card { padding: 20px; }
+            .food-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 메인으로 돌아가기 버튼 -->
+        <a href="index.html" class="back-home">
+            ← 메인으로 돌아가기
+        </a>
+
+        <h1>요리 도감</h1>
+        <p class="subtitle">오리진피아 서버에서 만나볼 수 있는 다양한 요리 목록입니다.</p>
+        
+        <!-- 1. 메인 요리 -->
+        <div class="category-card">
+            <h2>🍔 1. 메인 요리</h2>
+            <div class="food-grid">
+                <div class="food-item">햄버거</div>
+                <div class="food-item">치즈버거</div>
+                <div class="food-item">베이컨 버거</div>
+                <div class="food-item">에그 버거</div>
+                <div class="food-item">피자</div>
+                <div class="food-item">페페로니 피자</div>
+                <div class="food-item">앤초비 피자</div>
+                <div class="food-item">타코</div>
+                <div class="food-item">부리또</div>
+                <div class="food-item">나초</div>
+                <div class="food-item">아티초크 디프</div>
+                <div class="food-item">스파게티</div>
+                <div class="food-item">라자냐</div>
+                <div class="food-item">라비올리</div>
+                <div class="food-item">마카로니 앤 치즈</div>
+                <div class="food-item">프라이드 치킨</div>
+                <div class="food-item">생선과 감자 튀김</div>
+                <div class="food-item">비프 웰링턴</div>
+                <div class="food-item">초밥</div>
+                <div class="food-item">캘리포니아 롤</div>
+                <div class="food-item">포 (쌀국수)</div>
+                <div class="food-item">라따뚜이</div>
+                <div class="food-item">그릴드 치즈 샌드위치</div>
+                <div class="food-item">치킨 샌드위치</div>
+                <div class="food-item">베이컨 샌드위치</div>
+                <div class="food-item">아이바르 토스트</div>
+            </div>
+        </div>
+
+        <!-- 2. 아침 식사 -->
+        <div class="category-card">
+            <h2>🥞 2. 아침 식사</h2>
+            <div class="food-grid">
+                <div class="food-item">프렌치 토스트</div>
+                <div class="food-item">토스트</div>
+                <div class="food-item">팬케이크</div>
+                <div class="food-item">와플</div>
+                <div class="food-item">베이글과 크림치즈</div>
+                <div class="food-item">스크램블 에그</div>
+                <div class="food-item">오믈렛</div>
+                <div class="food-item">베이컨과 달걀</div>
+                <div class="food-item">구운 베이컨</div>
+                <div class="food-item">시리얼</div>
+                <div class="food-item">오트밀</div>
+            </div>
+        </div>
+
+        <!-- 3. 수프, 스튜 -->
+        <div class="category-card">
+            <h2>🍲 3. 수프, 스튜 및 샐러드</h2>
+            <div class="food-grid">
+                <div class="food-item">토마토 수프</div>
+                <div class="food-item">호박 수프</div>
+                <div class="food-item">야채 수프</div>
+                <div class="food-item">옥수수 차우더</div>
+                <div class="food-item">비프 스튜</div>
+                <div class="food-item">치킨 누들 수프</div>
+                <div class="food-item">시저 샐러드</div>
+                <div class="food-item">과일 샐러드</div>
+                <div class="food-item">야채 샐러드</div>
+                <div class="food-item">치킨 오이 샐러드</div>
+                <div class="food-item">구운 감자와 감자 요리</div>
+            </div>
+        </div>
+
+        <!-- 4. 디저트 및 베이커리 -->
+        <div class="category-card">
+            <h2>🍰 4. 디저트 및 베이커리</h2>
+            <div class="food-grid">
+                <div class="food-item">사과 파이</div>
+                <div class="food-item">체리 파이</div>
+                <div class="food-item">블루베리 파이</div>
+                <div class="food-item">호박 파이</div>
+                <div class="food-item">피칸 파이</div>
+                <div class="food-item">바나나 크림 파이</div>
+                <div class="food-item">너티 쿠키</div>
+                <div class="food-item">레이즌 오트밀 쿠키</div>
+                <div class="food-item">스니커두들</div>
+                <div class="food-item">바나나 넛 브레드</div>
+                <div class="food-item">브라우니</div>
+                <div class="food-item">도넛</div>
+                <div class="food-item">추러스</div>
+                <div class="food-item">아몬드 브리틀</div>
+                <div class="food-item">피기 푸딩</div>
+                <div class="food-item">스키키 토피 푸딩</div>
+                <div class="food-item">과일 케이크</div>
+                <div class="food-item">트레첼 타르트</div>
+                <div class="food-item">트레 레체 케이크</div>
+                <div class="food-item">트라이플</div>
+                <div class="food-item">루바브 크리스프</div>
+                <div class="food-item">레몬 코코넛 바</div>
+                <div class="food-item">초콜릿 아이스크림</div>
+                <div class="food-item">바닐라 아이스크림</div>
+                <div class="food-item">키위 셔벗</div>
+                <div class="food-item">이튼 메스</div>
+            </div>
+        </div>
+
+        <!-- 5. 음료 및 주류 -->
+        <div class="category-card">
+            <h2>🍹 5. 음료 및 주류</h2>
+            <div class="food-grid">
+                <div class="food-item">사과 주스</div>
+                <div class="food-item">오렌지 주스</div>
+                <div class="food-item">포도 주스</div>
+                <div class="food-item">레모네이드</div>
+                <div class="food-item">밀크셰이크</div>
+                <div class="food-item">두유</div>
+                <div class="food-item">과일 스무디</div>
+                <div class="food-item">커피</div>
+                <div class="food-item">차</div>
+                <div class="food-item">맥주</div>
+                <div class="food-item">럼</div>
+                <div class="food-item">와인</div>
+            </div>
+        </div>
+
+        <!-- 하단 메인으로 돌아가기 버튼 -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="back-home">
+                ← 메인으로 돌아가기
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
