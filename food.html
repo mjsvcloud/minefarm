@@ -110,6 +110,7 @@
         }
 
         .food-item {
+            position: relative; /* 툴팁 위치를 잡기 위한 기준 */
             background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 10px;
@@ -120,12 +121,42 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             transition: all 0.2s ease;
             text-align: center;
+            cursor: pointer;
         }
 
         .food-item:hover {
             border-color: var(--primary-border);
             background-color: var(--primary-bg);
             color: var(--primary-color);
+        }
+
+        /* 호버 시 나타나는 이미지 툴팁 스타일 (크기 제한 해제 및 원본 비율 유지) */
+        .food-tooltip {
+            display: none;
+            position: absolute;
+            bottom: 115%; /* 아이템 위쪽에 띄움 */
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+            padding: 6px;
+            z-index: 50;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .food-tooltip img {
+            display: block;
+            max-width: 250px; /* 너무 클 경우에만 화면에 맞게 조절 (완전 원본을 원하시면 이 줄을 삭제하세요) */
+            height: auto;     /* 비율 유지 */
+            border-radius: 8px;
+        }
+
+        /* 마우스 호버 시 툴팁 표시 */
+        .food-item:hover .food-tooltip {
+            display: block;
         }
 
         /* 모바일 반응형 */
@@ -150,122 +181,122 @@
         
         <!-- 1. 메인 요리 -->
         <div class="category-card">
-            <h2>🍔 1. 메인 요리</h2>
+            <h2>1. 메인 요리</h2>
             <div class="food-grid">
-                <div class="food-item">햄버거</div>
-                <div class="food-item">치즈버거</div>
-                <div class="food-item">베이컨 버거</div>
-                <div class="food-item">에그 버거</div>
-                <div class="food-item">피자</div>
-                <div class="food-item">페페로니 피자</div>
-                <div class="food-item">앤초비 피자</div>
-                <div class="food-item">타코</div>
-                <div class="food-item">부리또</div>
-                <div class="food-item">나초</div>
-                <div class="food-item">아티초크 디프</div>
-                <div class="food-item">스파게티</div>
-                <div class="food-item">라자냐</div>
-                <div class="food-item">라비올리</div>
-                <div class="food-item">마카로니 앤 치즈</div>
-                <div class="food-item">프라이드 치킨</div>
-                <div class="food-item">생선과 감자 튀김</div>
-                <div class="food-item">비프 웰링턴</div>
-                <div class="food-item">초밥</div>
-                <div class="food-item">캘리포니아 롤</div>
-                <div class="food-item">포 (쌀국수)</div>
-                <div class="food-item">라따뚜이</div>
-                <div class="food-item">그릴드 치즈 샌드위치</div>
-                <div class="food-item">치킨 샌드위치</div>
-                <div class="food-item">베이컨 샌드위치</div>
-                <div class="food-item">아이바르 토스트</div>
+                <div class="food-item">햄버거<div class="food-tooltip"><img src="햄버거.png" alt="햄버거"></div></div>
+                <div class="food-item">치즈버거<div class="food-tooltip"><img src="치즈버거.png" alt="치즈버거"></div></div>
+                <div class="food-item">베이컨 버거<div class="food-tooltip"><img src="베이컨 버거.png" alt="베이컨 버거"></div></div>
+                <div class="food-item">에그 버거<div class="food-tooltip"><img src="에그 버거.png" alt="에그 버거"></div></div>
+                <div class="food-item">피자<div class="food-tooltip"><img src="피자.png" alt="피자"></div></div>
+                <div class="food-item">페페로니 피자<div class="food-tooltip"><img src="페페로니 피자.png" alt="페페로니 피자"></div></div>
+                <div class="food-item">앤초비 피자<div class="food-tooltip"><img src="앤초비 피자.png" alt="앤초비 피자"></div></div>
+                <div class="food-item">타코<div class="food-tooltip"><img src="타코.png" alt="타코"></div></div>
+                <div class="food-item">부리또<div class="food-tooltip"><img src="부리또.png" alt="부리또"></div></div>
+                <div class="food-item">나초<div class="food-tooltip"><img src="나초.png" alt="나초"></div></div>
+                <div class="food-item">아티초크 디프<div class="food-tooltip"><img src="아티초크 디프.png" alt="아티초크 디프"></div></div>
+                <div class="food-item">스파게티<div class="food-tooltip"><img src="스파게티.png" alt="스파게티"></div></div>
+                <div class="food-item">라자냐<div class="food-tooltip"><img src="라자냐.png" alt="라자냐"></div></div>
+                <div class="food-item">라비올리<div class="food-tooltip"><img src="라비올리.png" alt="라비올리"></div></div>
+                <div class="food-item">마카로니 앤 치즈<div class="food-tooltip"><img src="마카로니 앤 치즈.png" alt="마카로니 앤 치즈"></div></div>
+                <div class="food-item">프라이드 치킨<div class="food-tooltip"><img src="프라이드 치킨.png" alt="프라이드 치킨"></div></div>
+                <div class="food-item">생선과 감자 튀김<div class="food-tooltip"><img src="생선과 감자 튀김.png" alt="생선과 감자 튀김"></div></div>
+                <div class="food-item">비프 웰링턴<div class="food-tooltip"><img src="비프 웰링턴.png" alt="비프 웰링턴"></div></div>
+                <div class="food-item">초밥<div class="food-tooltip"><img src="초밥.png" alt="초밥"></div></div>
+                <div class="food-item">캘리포니아 롤<div class="food-tooltip"><img src="캘리포니아 롤.png" alt="캘리포니아 롤"></div></div>
+                <div class="food-item">포 (쌀국수)<div class="food-tooltip"><img src="포 (쌀국수).png" alt="포 (쌀국수)"></div></div>
+                <div class="food-item">라따뚜이<div class="food-tooltip"><img src="라따뚜이.png" alt="라따뚜이"></div></div>
+                <div class="food-item">그릴드 치즈 샌드위치<div class="food-tooltip"><img src="그릴드 치즈 샌드위치.png" alt="그릴드 치즈 샌드위치"></div></div>
+                <div class="food-item">치킨 샌드위치<div class="food-tooltip"><img src="치킨 샌드위치.png" alt="치킨 샌드위치"></div></div>
+                <div class="food-item">베이컨 샌드위치<div class="food-tooltip"><img src="베이컨 샌드위치.png" alt="베이컨 샌드위치"></div></div>
+                <div class="food-item">아이바르 토스트<div class="food-tooltip"><img src="아이바르 토스트.png" alt="아이바르 토스트"></div></div>
             </div>
         </div>
 
         <!-- 2. 아침 식사 -->
         <div class="category-card">
-            <h2>🥞 2. 아침 식사</h2>
+            <h2>2. 아침 식사</h2>
             <div class="food-grid">
-                <div class="food-item">프렌치 토스트</div>
-                <div class="food-item">토스트</div>
-                <div class="food-item">팬케이크</div>
-                <div class="food-item">와플</div>
-                <div class="food-item">베이글과 크림치즈</div>
-                <div class="food-item">스크램블 에그</div>
-                <div class="food-item">오믈렛</div>
-                <div class="food-item">베이컨과 달걀</div>
-                <div class="food-item">구운 베이컨</div>
-                <div class="food-item">시리얼</div>
-                <div class="food-item">오트밀</div>
+                <div class="food-item">프렌치 토스트<div class="food-tooltip"><img src="프렌치 토스트.png" alt="프렌치 토스트"></div></div>
+                <div class="food-item">토스트<div class="food-tooltip"><img src="토스트.png" alt="토스트"></div></div>
+                <div class="food-item">팬케이크<div class="food-tooltip"><img src="팬케이크.png" alt="팬케이크"></div></div>
+                <div class="food-item">와플<div class="food-tooltip"><img src="와플.png" alt="와플"></div></div>
+                <div class="food-item">베이글과 크림치즈<div class="food-tooltip"><img src="베이글과 크림치즈.png" alt="베이글과 크림치즈"></div></div>
+                <div class="food-item">스크램블 에그<div class="food-tooltip"><img src="스크램블 에그.png" alt="스크램블 에그"></div></div>
+                <div class="food-item">오믈렛<div class="food-tooltip"><img src="오믈렛.png" alt="오믈렛"></div></div>
+                <div class="food-item">베이컨과 달걀<div class="food-tooltip"><img src="베이컨과 달걀.png" alt="베이컨과 달걀"></div></div>
+                <div class="food-item">구운 베이컨<div class="food-tooltip"><img src="구운 베이컨.png" alt="구운 베이컨"></div></div>
+                <div class="food-item">시리얼<div class="food-tooltip"><img src="시리얼.png" alt="시리얼"></div></div>
+                <div class="food-item">오트밀<div class="food-tooltip"><img src="오트밀.png" alt="오트밀"></div></div>
             </div>
         </div>
 
         <!-- 3. 수프, 스튜 -->
         <div class="category-card">
-            <h2>🍲 3. 수프, 스튜 및 샐러드</h2>
+            <h2>3. 수프, 스튜 및 샐러드</h2>
             <div class="food-grid">
-                <div class="food-item">토마토 수프</div>
-                <div class="food-item">호박 수프</div>
-                <div class="food-item">야채 수프</div>
-                <div class="food-item">옥수수 차우더</div>
-                <div class="food-item">비프 스튜</div>
-                <div class="food-item">치킨 누들 수프</div>
-                <div class="food-item">시저 샐러드</div>
-                <div class="food-item">과일 샐러드</div>
-                <div class="food-item">야채 샐러드</div>
-                <div class="food-item">치킨 오이 샐러드</div>
-                <div class="food-item">구운 감자와 감자 요리</div>
+                <div class="food-item">토마토 수프<div class="food-tooltip"><img src="토마토 수프.png" alt="토마토 수프"></div></div>
+                <div class="food-item">호박 수프<div class="food-tooltip"><img src="호박 수프.png" alt="호박 수프"></div></div>
+                <div class="food-item">야채 수프<div class="food-tooltip"><img src="야채 수프.png" alt="야채 수프"></div></div>
+                <div class="food-item">옥수수 차우더<div class="food-tooltip"><img src="옥수수 차우더.png" alt="옥수수 차우더"></div></div>
+                <div class="food-item">비프 스튜<div class="food-tooltip"><img src="비프 스튜.png" alt="비프 스튜"></div></div>
+                <div class="food-item">치킨 누들 수프<div class="food-tooltip"><img src="치킨 누들 수프.png" alt="치킨 누들 수프"></div></div>
+                <div class="food-item">시저 샐러드<div class="food-tooltip"><img src="시저 샐러드.png" alt="시저 샐러드"></div></div>
+                <div class="food-item">과일 샐러드<div class="food-tooltip"><img src="과일 샐러드.png" alt="과일 샐러드"></div></div>
+                <div class="food-item">야채 샐러드<div class="food-tooltip"><img src="야채 샐러드.png" alt="야채 샐러드"></div></div>
+                <div class="food-item">치킨 오이 샐러드<div class="food-tooltip"><img src="치킨 오이 샐러드.png" alt="치킨 오이 샐러드"></div></div>
+                <div class="food-item">구운 감자와 감자 요리<div class="food-tooltip"><img src="구운 감자와 감자 요리.png" alt="구운 감자와 감자 요리"></div></div>
             </div>
         </div>
 
         <!-- 4. 디저트 및 베이커리 -->
         <div class="category-card">
-            <h2>🍰 4. 디저트 및 베이커리</h2>
+            <h2>4. 디저트 및 베이커리</h2>
             <div class="food-grid">
-                <div class="food-item">사과 파이</div>
-                <div class="food-item">체리 파이</div>
-                <div class="food-item">블루베리 파이</div>
-                <div class="food-item">호박 파이</div>
-                <div class="food-item">피칸 파이</div>
-                <div class="food-item">바나나 크림 파이</div>
-                <div class="food-item">너티 쿠키</div>
-                <div class="food-item">레이즌 오트밀 쿠키</div>
-                <div class="food-item">스니커두들</div>
-                <div class="food-item">바나나 넛 브레드</div>
-                <div class="food-item">브라우니</div>
-                <div class="food-item">도넛</div>
-                <div class="food-item">추러스</div>
-                <div class="food-item">아몬드 브리틀</div>
-                <div class="food-item">피기 푸딩</div>
-                <div class="food-item">스키키 토피 푸딩</div>
-                <div class="food-item">과일 케이크</div>
-                <div class="food-item">트레첼 타르트</div>
-                <div class="food-item">트레 레체 케이크</div>
-                <div class="food-item">트라이플</div>
-                <div class="food-item">루바브 크리스프</div>
-                <div class="food-item">레몬 코코넛 바</div>
-                <div class="food-item">초콜릿 아이스크림</div>
-                <div class="food-item">바닐라 아이스크림</div>
-                <div class="food-item">키위 셔벗</div>
-                <div class="food-item">이튼 메스</div>
+                <div class="food-item">사과 파이<div class="food-tooltip"><img src="사과 파이.png" alt="사과 파이"></div></div>
+                <div class="food-item">체리 파이<div class="food-tooltip"><img src="체리 파이.png" alt="체리 파이"></div></div>
+                <div class="food-item">블루베리 파이<div class="food-tooltip"><img src="블루베리 파이.png" alt="블루베리 파이"></div></div>
+                <div class="food-item">호박 파이<div class="food-tooltip"><img src="호박 파이.png" alt="호박 파이"></div></div>
+                <div class="food-item">피칸 파이<div class="food-tooltip"><img src="피칸 파이.png" alt="피칸 파이"></div></div>
+                <div class="food-item">바나나 크림 파이<div class="food-tooltip"><img src="바나나 크림 파이.png" alt="바나나 크림 파이"></div></div>
+                <div class="food-item">너티 쿠키<div class="food-tooltip"><img src="너티 쿠키.png" alt="너티 쿠키"></div></div>
+                <div class="food-item">레이즌 오트밀 쿠키<div class="food-tooltip"><img src="레이즌 오트밀 쿠키.png" alt="레이즌 오트밀 쿠키"></div></div>
+                <div class="food-item">스니커두들<div class="food-tooltip"><img src="스니커두들.png" alt="스니커두들"></div></div>
+                <div class="food-item">바나나 넛 브레드<div class="food-tooltip"><img src="바나나 넛 브레드.png" alt="바나나 넛 브레드"></div></div>
+                <div class="food-item">브라우니<div class="food-tooltip"><img src="브라우니.png" alt="브라우니"></div></div>
+                <div class="food-item">도넛<div class="food-tooltip"><img src="도넛.png" alt="도넛"></div></div>
+                <div class="food-item">추러스<div class="food-tooltip"><img src="추러스.png" alt="추러스"></div></div>
+                <div class="food-item">아몬드 브리틀<div class="food-tooltip"><img src="아몬드 브리틀.png" alt="아몬드 브리틀"></div></div>
+                <div class="food-item">피기 푸딩<div class="food-tooltip"><img src="피기 푸딩.png" alt="피기 푸딩"></div></div>
+                <div class="food-item">스키키 토피 푸딩<div class="food-tooltip"><img src="스키키 토피 푸딩.png" alt="스키키 토피 푸딩"></div></div>
+                <div class="food-item">과일 케이크<div class="food-tooltip"><img src="과일 케이크.png" alt="과일 케이크"></div></div>
+                <div class="food-item">트레첼 타르트<div class="food-tooltip"><img src="트레첼 타르트.png" alt="트레첼 타르트"></div></div>
+                <div class="food-item">트레 레체 케이크<div class="food-tooltip"><img src="트레 레체 케이크.png" alt="트레 레체 케이크"></div></div>
+                <div class="food-item">트라이플<div class="food-tooltip"><img src="트라이플.png" alt="트라이플"></div></div>
+                <div class="food-item">루바브 크리스프<div class="food-tooltip"><img src="루바브 크리스프.png" alt="루바브 크리스프"></div></div>
+                <div class="food-item">레몬 코코넛 바<div class="food-tooltip"><img src="레몬 코코넛 바.png" alt="레몬 코코넛 바"></div></div>
+                <div class="food-item">초콜릿 아이스크림<div class="food-tooltip"><img src="초콜릿 아이스크림.png" alt="초콜릿 아이스크림"></div></div>
+                <div class="food-item">바닐라 아이스크림<div class="food-tooltip"><img src="바닐라 아이스크림.png" alt="바닐라 아이스크림"></div></div>
+                <div class="food-item">키위 셔벗<div class="food-tooltip"><img src="키위 셔벗.png" alt="키위 셔벗"></div></div>
+                <div class="food-item">이튼 메스<div class="food-tooltip"><img src="이튼 메스.png" alt="이튼 메스"></div></div>
             </div>
         </div>
 
         <!-- 5. 음료 및 주류 -->
         <div class="category-card">
-            <h2>🍹 5. 음료 및 주류</h2>
+            <h2>5. 음료 및 주류</h2>
             <div class="food-grid">
-                <div class="food-item">사과 주스</div>
-                <div class="food-item">오렌지 주스</div>
-                <div class="food-item">포도 주스</div>
-                <div class="food-item">레모네이드</div>
-                <div class="food-item">밀크셰이크</div>
-                <div class="food-item">두유</div>
-                <div class="food-item">과일 스무디</div>
-                <div class="food-item">커피</div>
-                <div class="food-item">차</div>
-                <div class="food-item">맥주</div>
-                <div class="food-item">럼</div>
-                <div class="food-item">와인</div>
+                <div class="food-item">사과 주스<div class="food-tooltip"><img src="사과 주스.png" alt="사과 주스"></div></div>
+                <div class="food-item">오렌지 주스<div class="food-tooltip"><img src="오렌지 주스.png" alt="오렌지 주스"></div></div>
+                <div class="food-item">포도 주스<div class="food-tooltip"><img src="포도 주스.png" alt="포도 주스"></div></div>
+                <div class="food-item">레모네이드<div class="food-tooltip"><img src="레모네이드.png" alt="레모네이드"></div></div>
+                <div class="food-item">밀크셰이크<div class="food-tooltip"><img src="밀크셰이크.png" alt="밀크셰이크"></div></div>
+                <div class="food-item">두유<div class="food-tooltip"><img src="두유.png" alt="두유"></div></div>
+                <div class="food-item">과일 스무디<div class="food-tooltip"><img src="과일 스무디.png" alt="과일 스무디"></div></div>
+                <div class="food-item">커피<div class="food-tooltip"><img src="커피.png" alt="커피"></div></div>
+                <div class="food-item">차<div class="food-tooltip"><img src="차.png" alt="차"></div></div>
+                <div class="food-item">맥주<div class="food-tooltip"><img src="맥주.png" alt="맥주"></div></div>
+                <div class="food-item">럼<div class="food-tooltip"><img src="럼.png" alt="럼"></div></div>
+                <div class="food-item">와인<div class="food-tooltip"><img src="와인.png" alt="와인"></div></div>
             </div>
         </div>
 
